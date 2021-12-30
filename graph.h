@@ -16,6 +16,10 @@ typedef struct GRAPH_NODE_ {
     struct GRAPH_NODE_ *next;
 } node, *pnode;
 
+typedef struct Graph {
+    int nodes;
+} graph;
+
 pnode getNode(node **head, int id);//done
 void build_graph_cmd(pnode *head);//done
 void insert_node_cmd(pnode *head);//done
