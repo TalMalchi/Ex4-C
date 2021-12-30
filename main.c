@@ -11,36 +11,13 @@
 
 int main() {
 
-    char action;
-    int node_numbers;
-    int id_node_src;
-    int node_dest;
-    int weight;
-    NODE **headNode = NULL;//define the head of the Nodelist
-    Edge **headEdge = NULL;//define the head of the Nodelist
-    NODE *h = &(headNode);
 
-    while (1) {
-        scanf("%c/n", &action);
-        if (action == 'A') {
-            scanf("%d/n", &node_numbers);
-            //createGraph( h, node_numbers);
-            continue;
-        }
-        else if (action == 'n') {
-            scanf("%d/n", &id_node_src);//get first node
-            insertNewNode(h, id_node_src);
-            int flag = 1;
-            while (flag) { //start to moove over all dest weight dest weight etc. until we get more 'n'
-                if (scanf("%d/n", &node_dest) != 0) {
-                    insertNewNode(h, node_dest);
-                    scanf("%d/n", &weight);
-                    insertNewEdge(h, id_node_src, weight, node_dest);
-                } else {
-                    flag= !flag;
-                }
-            }
-        }
+    node *headNode = NULL;//define the head of the Nodelist
+    edge **headEdge = NULL;//define the head of the Nodelist
+    node *h = &(headNode);
+
+    void build_graph_cmd(pnode *headNode);
+
 //       else if (action == 'B'){ //add new node
 //
 //    }
@@ -53,13 +30,14 @@ int main() {
 //        else if (action == 'T'){ //TSP
 //
 //        }
-        else
-            return 0;
-        }
+    // else
+    return 0;
+    // }
 
-}
+//}
 
 //}
 
 
 
+}
