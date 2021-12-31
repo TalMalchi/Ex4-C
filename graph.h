@@ -18,7 +18,8 @@ typedef struct GRAPH_NODE_ {
 
 typedef struct Graph {
     int nodes;
-} graph;
+   // int size;
+}graph;
 
 pnode getNode(node **head, int id);//done
 void build_graph_cmd(pnode *head);//done
