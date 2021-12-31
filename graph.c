@@ -3,16 +3,8 @@
 #include <malloc.h>
 
 
-
-
 //with using :
 //https://www.log2base2.com/data-structures/linked-list/inserting-a-node-at-the-end-of-a-linked-list.html
-
-//void createGraph(NODE **head, int node_numbers){
-//    NODE *node_array = (NODE *) malloc(node_numbers * sizeof(NODE));
-//    if (node_array == NULL) {
-//        return ;
-//    }
 
 void insertNewNode(node **head, int id) {
     //void insertNewNode (pnode **head,int id) {
@@ -42,7 +34,7 @@ void insertNewNode(node **head, int id) {
 }
 
 
-void insertNewEdge(edge **head, int weight, int dest) {
+void insertNewEdge(edge **head,int id, int weight, int dest) {
     edge *newEdge = malloc(sizeof(edge)); //create a new node
     //pnode src_node= getNode(*head, src);
     //src_node->edge->
@@ -50,12 +42,14 @@ void insertNewEdge(edge **head, int weight, int dest) {
     pnode dest_node = getNode(*head, dest);
     newEdge->endpoint = dest_node;
     newEdge->next = NULL;
-    if (*head == NULL) { //if head is NULL, it is an empty list
+    node *curr_node;
+    curr_node= getNode(head, id);
+    if (curr_node->edges == NULL) { //if head is NULL, it is an empty list
         *head = newEdge;
 
     } else //else, find the last node and add the newNode
     {
-        struct edge_ *lastEdge = *head;
+        struct edge_ *lastEdge = curr_node->edges;
         while (lastEdge->next != NULL) //last Edges's next address will be NULL.
         {
             lastEdge = lastEdge->next; //precede the Edge to be the next Edge
@@ -73,7 +67,10 @@ pnode getNode(node **head, int id) { // retrun a NODE
         } else {
             p = p->next;
         }
+
     }
+    return 0; //if the node not in the graph
+
 }
 
 void build_graph_cmd(pnode *head) {
@@ -93,7 +90,7 @@ void build_graph_cmd(pnode *head) {
         while (scanf(" %d", &node_dest)) { //start to moove over all dest weight dest weight etc. until we get more 'n'
             insertNewNode(head, node_dest);
             scanf(" %d", &weight);
-            insertNewEdge(head, weight, node_dest);
+            insertNewEdge(head,id_node_src, weight, node_dest);
         }
     }
 }
@@ -127,8 +124,50 @@ void deleteNode(node **head, int key) {
 }
 
 void deleteGraph_cmd(pnode *head) {
-    while ((*head)->next != NULL) {
+    node temp = **head; //init temp node to the head
+    edge *edge_temp;
+    while (temp.next != NULL) { // go all over the nodes
+        node *curr_node = &temp; //init curr node
+        edge_temp = temp.edges; // init temp_edge to point the edges of
+        while (edge_temp != NULL) { //go all over the edges in the node
+            edge *curr_edge= edge_temp;
+            edge_temp= edge_temp->next; // increase the edge by 1
+            free(curr_edge);
+        }
+        temp= temp.next;
+        free(curr_node);
+
+
         //deleteNode(head,)
     }
 
 }
+
+void add_new_node(pnode *head){
+    int id;
+    scanf(" %d", &id);
+    if(getNode(head, id)==0){ //check if the node exist in the graph
+        insertNewNode(*head, id);
+    }
+    else { // if the node in the graph delete the ou edges
+        edge *edgeTemp;
+        node *curr_node= getNode(*head, id);
+        edgeTemp = curr_node->edges ; // init temp_edge to point the edges of
+        while (edgeTemp != NULL) { //go all over the edges in the node
+            edge *curr_edge= edgeTemp;
+            edgeTemp= edgeTemp->next; // increase the edge by 1
+            free(curr_edge);
+        }
+        int weight;
+        int dest;
+        while (scanf(" %d", &dest)) { //start to moove over all dest weight dest weight etc. until we get more 'n'
+            insertNewNode(head, dest);
+            scanf(" %d", &weight);
+            insertNewEdge(head, id, weight, dest);
+        }
+
+    }
+
+
+}
+

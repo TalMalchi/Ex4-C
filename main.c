@@ -6,26 +6,24 @@
 #define catch(x) ExitJmp:if(__HadError)
 #define throw(x) __HadError=true;goto ExitJmp;
 
-#include <stdbool.h>
 
-
-//node *headNode = NULL;//define the head of the Nodelist
+//pnode **headNode = NULL;//define the head of the Nodelist
 edge **headEdge = NULL;//define the head of the Nodelist
 //node *h = &(headNode);
 
 int main() {
     char action;
-   pnode head ={0,0,NULL};
-    while (scanf(" %c", &action)!= EOF){
-    //scanf(" %c", &action);
-        //build_graph_cmd(head);
+    pnode head = NULL;
+    while (scanf(" %c", &action) != EOF) {
+        //scanf(" %c", &action);
+        build_graph_cmd(head);
         if (action == 'A') {
-        //struct GRAPH_NODE_ *headNode = (struct GRAPH_NODE_ *) malloc(1 * sizeof(struct GRAPH_NODE_));
-         build_graph_cmd(head);
-
-//       else if (action == 'B'){ //add new node
-//
-//    }
+            //struct GRAPH_NODE_ *headNode = (struct GRAPH_NODE_ *) malloc(1 * sizeof(struct GRAPH_NODE_));
+            build_graph_cmd(&head);
+        }
+        else if (action == 'B') { //add new node
+            add_new_node(&head);
+            }
 //        else if (action == 'D'){ //remove node
 //
 //        }
@@ -34,13 +32,12 @@ int main() {
 //        }
 //        else if (action == 'T'){ //TSP
 //
-   }
-         else return 0;
-        }
-
-//}
-
-//}
-
+        } //else return 0;
     }
+
+//}
+
+//}
+
+
 
