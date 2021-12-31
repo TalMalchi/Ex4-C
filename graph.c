@@ -126,9 +126,9 @@ void deleteNode(node **head, int key) {
     }
 }
 
-//void deleteGraph_cmd(pnode *head) {
-//    while ((*head)->next != NULL) {
-//        deleteNode(head,)
-//    }
-//
-//}
+void deleteGraph_cmd(pnode *head) {
+    while ((*head)->next != NULL) {
+        //deleteNode(head,)
+    }
+
+}
