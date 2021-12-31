@@ -15,10 +15,10 @@ edge **headEdge = NULL;//define the head of the Nodelist
 
 int main() {
     char action;
-    pnode head ={0,0,NULL};
+   pnode head ={0,0,NULL};
     while (scanf(" %c", &action)!= EOF){
     //scanf(" %c", &action);
-        build_graph_cmd(head);
+        //build_graph_cmd(head);
         if (action == 'A') {
         //struct GRAPH_NODE_ *headNode = (struct GRAPH_NODE_ *) malloc(1 * sizeof(struct GRAPH_NODE_));
          build_graph_cmd(head);
