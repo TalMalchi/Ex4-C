@@ -26,8 +26,7 @@ void insertNewNode(node **head, int id) {
             lastNode = lastNode->next; //precede the node to be the next node
         }
 
-        if (lastNode->node_num !=
-            id)//if we exit from the while because (lastNode->node_num==id) we will not add the new node, if it do not exist ,than :
+        if (lastNode->node_num !=id)//if we exit from the while because (lastNode->node_num==id) we will not add the new node, if it do not exist ,than :
         {
             lastNode->next = newNode;  //we will add the newNode at the end of the linked list
         }
@@ -41,8 +40,8 @@ void insertNewEdge(node **Nhead,int Nsrc, int weight, int dest) {
     //pnode src_node= getNode(*head, src);
     //src_node->edge->
     newEdge->weight = weight;
-    pnode src_node = getNode(*Nhead, Nsrc);
-    pnode dest_node = getNode(*Nhead, dest);
+    pnode src_node = getNode(Nhead, Nsrc);
+    pnode dest_node = getNode(Nhead, dest);
     newEdge->endpoint = dest_node;
     newEdge->next = NULL;
     if (src_node->edges == NULL) { //if head is NULL, it is an empty list
@@ -62,7 +61,7 @@ void insertNewEdge(node **Nhead,int Nsrc, int weight, int dest) {
 
 pnode getNode(node **head, int id) { // retrun a NODE
     pnode p = *head;
-    while (p) {
+    while (p!= NULL) {
         if (p->node_num == id) { //search for the node with the given id
             return p;
         } else {
@@ -253,19 +252,19 @@ int* Dijkstra(int **Graph, int num_of_nodes_in_g, int start) {//by using : https
     return distance;//distane is array that the Distance from source to i is distance[i]
 }
 
-int shortsPath_cmd(pnode *head,int src,int dest) {
+void shortsPath_cmd(pnode *head,int src,int dest) {
     int check = 0;
     node *tempNodeP = head;
     if (tempNodeP == NULL)//if the graph empty
     {
-        return -1;
+        printf("Dijsktra shortest path:%ld",-1) ;
     }
     if (src == dest) //if source is equal to dest
     {
-        return 0;
+        printf("Dijsktra shortest path:%ld",0) ;
     }
     int *distance;
     //Dijkstra(int **Graph, int num_of_nodes_in_g, int start)
     distance = Dijkstra(head, node_numbers, src);
-    return distance[dest];
+    printf("Dijsktra shortest path:%ld",distance[dest]) ;
 }

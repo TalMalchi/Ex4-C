@@ -16,7 +16,7 @@ int main() {
     pnode head = NULL;
     while (scanf(" %c", &action) != EOF) {
         //scanf(" %c", &action);
-        build_graph_cmd(head);
+        //build_graph_cmd(head);
         if (action == 'A') {
             //struct GRAPH_NODE_ *headNode = (struct GRAPH_NODE_ *) malloc(1 * sizeof(struct GRAPH_NODE_));
             build_graph_cmd(&head);
@@ -27,9 +27,12 @@ int main() {
 //        else if (action == 'D'){ //remove node
 //
 //        }
-//        else if (action == 'S'){ //Shortest path
-//
-//        }
+        else if (action == 'S'){ //Shortest path
+            int src,dest;
+            scanf(" %d", &src);
+            scanf(" %d", &dest);
+            shortsPath_cmd(&head,src,dest);
+        }
 //        else if (action == 'T'){ //TSP
 //
         } //else return 0;
