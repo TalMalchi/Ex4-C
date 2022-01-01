@@ -18,25 +18,27 @@ int main() {
         //scanf(" %c", &action);
         //build_graph_cmd(head);
         if (action == 'A') {
-            //struct GRAPH_NODE_ *headNode = (struct GRAPH_NODE_ *) malloc(1 * sizeof(struct GRAPH_NODE_));
             build_graph_cmd(&head);
-        }
-        else if (action == 'B') { //add new node
+        } else if (action == 'B') { //add new node
             add_new_node(&head);
-            }
-//        else if (action == 'D'){ //remove node
-//
-//        }
-        else if (action == 'S'){ //Shortest path
-            int src,dest;
+        }
+        else if (action == 'D'){ //remove node
+          Delete_node(&head);
+        }
+        else if (action == 'S') { //Shortest path
+            int src, dest;
             scanf(" %d", &src);
             scanf(" %d", &dest);
-            shortsPath_cmd(&head,src,dest);
-        }   else if (action == 'T'){
-            TSP(&head);
+            shortsPath_cmd(&head, src, dest);
+        }
+//        else if (action == 'T'){ //TSP
+//
 
-        } //else return 0;
+//        else {
+//            return 0;
+//        }
     }
+}
 
 //}
 
