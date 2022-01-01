@@ -22,9 +22,9 @@ int main() {
         } else if (action == 'B') { //add new node
             add_new_node(&head);
         }
-//        else if (action == 'D'){ //remove node
-//
-//        }
+        else if (action == 'D'){ //remove node
+          Delete_node(&head);
+        }
         else if (action == 'S') { //Shortest path
             int src, dest;
             scanf(" %d", &src);

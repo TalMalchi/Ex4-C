@@ -29,7 +29,9 @@ pnode getNode(node **head, int id);//done
 void insert_node_cmd(pnode *head);//done
 // void delete_node_cmd(pnode *head); //no need
 void deleteNode(node **head, int key);//done
-void add_new_node(pnode *head);
+void Delete_node(pnode *head);//D function- Pay attention! this is different from deleteNode!! (see implemention)
+
+void add_new_node(pnode *head);//Bfunction
 void printGraph_cmd(pnode head); //for self debug
 void deleteGraph_cmd(pnode* head);
 //void shortsPath_cmd(pnode head);

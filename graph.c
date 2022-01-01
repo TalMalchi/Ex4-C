@@ -110,7 +110,7 @@ void deleteEdges(node **head, int id)
 }
 
 
-
+//function delete node (ONLY the node!!)
 void deleteNode(node **head, int key) {
     struct node *temp = NULL;//temp is used to freeing the memory
 
@@ -154,6 +154,26 @@ void deleteGraph_cmd(pnode *head) {
     }
 
 }
+
+//D function - delete node and it is out edges
+void Delete_node(pnode *head) {
+    int id;
+    scanf(" %d", &id);//id of the new node
+//    if (getNode(head, id) == 0) { //check if the node exist in the graph. if it do not exist
+//        insertNewNode(*head, id);//we will insert this node
+//    } else { // if the node in the graph, delete it is edges
+        deleteEdges(*head, id);//delete all edges go out from this node
+    //}
+    //function delete node (ONLY the node!!)
+    deleteNode(*head, id);
+}
+
+
+
+
+
+
+
 
 //B function
 void add_new_node(pnode *head){
