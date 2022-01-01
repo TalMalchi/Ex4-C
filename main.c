@@ -26,17 +26,19 @@ int main() {
           Delete_node(&head);
         }
         else if (action == 'S') { //Shortest path
-            int src, dest;
+            int src, dest, ans;
             scanf(" %d", &src);
             scanf(" %d", &dest);
-            shortsPath_cmd(&head, src, dest);
+            ans= shortsPath_cmd(&head, src, dest);
+            printf("Dijsktra shortest path:%ld", ans);
         }
-//        else if (action == 'T'){ //TSP
-//
+        else if (action == 'T') { //TSP
+            TSP(&head);
+        }
 
-//        else {
-//            return 0;
-//        }
+        else {
+            return 0;
+        }
     }
 }
 
