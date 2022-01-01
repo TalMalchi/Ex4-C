@@ -32,9 +32,9 @@ int main() {
             scanf(" %d", &src);
             scanf(" %d", &dest);
             shortsPath_cmd(&head,src,dest);
-        }
-//        else if (action == 'T'){ //TSP
-//
+        }   else if (action == 'T'){
+            TSP(&head);
+
         } //else return 0;
     }
 

@@ -34,7 +34,7 @@ void printGraph_cmd(pnode head); //for self debug
 void deleteGraph_cmd(pnode* head);
 //void shortsPath_cmd(pnode head);
 void shortsPath_cmd(pnode *head,int src,int dest);
-
+void TSP(pnode *head);
 void TSP_cmd(pnode head);
 
 

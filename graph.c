@@ -2,6 +2,7 @@
 #include "graph.h"
 #include <malloc.h>
 #include <math.h>
+#include <string.h>
 int node_numbers;
 
 
@@ -267,4 +268,8 @@ void shortsPath_cmd(pnode *head,int src,int dest) {
     //Dijkstra(int **Graph, int num_of_nodes_in_g, int start)
     distance = Dijkstra(head, node_numbers, src);
     printf("Dijsktra shortest path:%ld",distance[dest]) ;
+}
+
+
+
 }
