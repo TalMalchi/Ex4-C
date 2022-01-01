@@ -32,7 +32,9 @@ void deleteNode(node **head, int key);//done
 void add_new_node(pnode *head);
 void printGraph_cmd(pnode head); //for self debug
 void deleteGraph_cmd(pnode* head);
-void shortsPath_cmd(pnode head);
+//void shortsPath_cmd(pnode head);
+int shortsPath_cmd(pnode *head,int src,int dest);
+
 void TSP_cmd(pnode head);
 
 
