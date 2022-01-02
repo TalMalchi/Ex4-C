@@ -117,6 +117,20 @@ void deleteEdges(node **head, int id)///////////////////////////////problem in w
 }
 
 
+//void deleteGraph_cmd(pnode *head) {
+//    if (*head == NULL) {
+//        return;
+//    }
+//    pnode temp = *head; //init temp node to the head
+//    edge *edge_temp;
+//    while (temp) { // go all over the nodes
+//        node *curr_node = temp; //init curr node
+//        edge_temp = temp->edges; // init temp_edge to point the edges of
+//        while (edge_temp) { //go all over the edges in the node
+//            edge *curr_edge = edge_temp;
+//            edge_temp = edge_temp->next; //
+
+
 //function delete node (ONLY the node!!)
 void deleteNode(node **head, int key) {
     struct node *temp = NULL;//temp is used to freeing the memory
@@ -143,7 +157,6 @@ void deleteNode(node **head, int key) {
         }
     }
 }
-
 
 void deleteGraph_cmd(pnode *head) {
     if (*head == NULL) {
