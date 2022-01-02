@@ -17,9 +17,10 @@ int main() {
     while (scanf(" %c", &action) != EOF) {
         //scanf(" %c", &action);
         //build_graph_cmd(head);
-        if (action == 'A') {
+        if (action == 'A') {//worke good
+            deleteGraph_cmd(&head);
             build_graph_cmd(&head);
-        } else if (action == 'B') { //add new node
+        } else if (action == 'B') { //add new node  //problem with delete edges
             add_new_node(&head);
         }
         else if (action == 'D'){ //remove node
