@@ -25,6 +25,7 @@ typedef struct Graph {
 
 void build_graph_cmd(pnode *head);//done
 
+
 pnode getNode(node **head, int id);//done
 void insert_node_cmd(pnode *head);//done
 // void delete_node_cmd(pnode *head); //no need

@@ -144,6 +144,7 @@ void deleteNode(node **head, int key) {
     }
 }
 
+
 void deleteGraph_cmd(pnode *head) {
     if (*head == NULL) {
         return;

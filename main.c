@@ -11,6 +11,7 @@
 edge **headEdge = NULL;//define the head of the Nodelist
 //node *h = &(headNode);
 
+
 int main() {
     char action;
     pnode head = NULL;
