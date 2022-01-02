@@ -18,6 +18,7 @@ int main() {
         //scanf(" %c", &action);
         //build_graph_cmd(head);
         if (action == 'A') {
+            deleteGraph_cmd(&head);
             build_graph_cmd(&head);
         } else if (action == 'B') { //add new node
             add_new_node(&head);

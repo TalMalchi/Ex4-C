@@ -98,18 +98,19 @@ void build_graph_cmd(pnode *head) {
 
 //function delete edges go out from node
 void deleteEdges(node **head, int id) {
-    node *curr_node = getNode(*head, id);
-    if (curr_node->edges == NULL)//if there are no edges in this node
+    node *curr_node = getNode(head, id);
+    edge *temp;//temp is used to freeing the memory
+    temp = curr_node->edges;
+    if (temp == NULL)//if there are no edges in this node
     {
         return;
     }
-    struct edge *temp = NULL;//temp is used to freeing the memory
-    while (curr_node->edges->next != NULL)//moove over all edges
-    {
-        temp = curr_node->edges->next;
-        curr_node->edges->next = curr_node->edges->next->next;//edge will be disconnected from the linked list.
-        free(temp);//free memory
+    while (temp) {//moove over all edges
+        edge *curr_edge = temp;
+        temp = temp->next; //edge will be disconnected from the linked list.
+        free(curr_edge);//free memory
     }
+
 }
 
 
@@ -140,12 +141,15 @@ void deleteNode(node **head, int key) {
 }
 
 void deleteGraph_cmd(pnode *head) {
+    if (*head == NULL) {
+        return;
+    }
     pnode temp = *head; //init temp node to the head
     edge *edge_temp;
-    while (temp->next != NULL) { // go all over the nodes
-        node *curr_node = &temp; //init curr node
+    while (temp) { // go all over the nodes
+        node *curr_node = temp; //init curr node
         edge_temp = temp->edges; // init temp_edge to point the edges of
-        while (edge_temp != NULL) { //go all over the edges in the node
+        while (edge_temp) { //go all over the edges in the node
             edge *curr_edge = edge_temp;
             edge_temp = edge_temp->next; // increase the edge by 1
             free(curr_edge);
@@ -211,32 +215,58 @@ int **allocate_board(int Rows, int Cols) {
     return board;
 }
 
+//void initMAT(pnode *headNode, int **matOfEdgesAndNodes) {
+//    pnode tempNode = *headNode;
+//    edge *tempEdge;
+//    while (tempNode) { //moving all over nodes in graph
+//        node *curr_node = tempNode;
+//        tempEdge = tempNode->edges;
+//        while (tempEdge) {//moving all over edge in one node
+//            int id_src= curr_node->node_num;
+//            int id_dest=  tempEdge->endpoint->node_num;
+//            int weight= tempEdge->weight;
+//            printf("tempNode->node_num: %ld ", id_src);
+//            printf("tempEdge->endpoint->node_num: %ld ", id_dest);
+//            printf("tempEdge->weight: %ld\n", weight);
+//            matOfEdgesAndNodes[tempNode->node_num][tempEdge->endpoint->node_num] = tempEdge->weight;
+//            //define every cell as [edge src][edge dest]
+//            tempEdge = tempEdge->next;
+//        }
+//        tempNode = tempNode->next;
+//    }
+//}
+
+
+
 //function put all weights in matrix num_of_nodes*num_of_nodes by src and node
 //int **initMAT(pnode *headNode)
-initMAT(node
-**headNode,
-int **matOfEdgesAndNodes
-)
-{//define mat numOfNodes*numOfNodes and the weight of every edge is written in it cell
+void initMAT(node **headNode,
+             int **matOfEdgesAndNodes) {//define mat numOfNodes*numOfNodes and the weight of every edge is written in it cell
 //int matOfEdgesAndNodes[node_numbers][node_numbers];=allocate_board(node_numbers, node_numbers);//decleare a memory to matrix
 //int **matOfEdgesAndNodes = allocate_board(node_numbers,node_numbers);//decleare a memory to matrix
-struct GRAPH_NODE_ *tempNode = *headNode;//define head of the list as a temp node
-while (tempNode->next != NULL) //moving all over nodes in graph
-{
-struct edge_ *tempEdge = tempNode->edges;//define head of the list as a temp edge
+//struct GRAPH_NODE_ *tempNode = *headNode;//define head of the list as a temp node
+    pnode tempNode = *headNode;
+    edge *tempEdge;
+    while (tempNode) { //moving all over nodes in graph
 
-while(tempEdge->next != NULL)//moving all over edge in one node
-{
-printf("tempNode->node_num: %ld ",tempNode->node_num);
-printf("tempEdge->endpoint->node_num: %ld ",tempEdge->endpoint->node_num);
-printf("tempEdge->weight: %ld\n",tempEdge->weight);
+//struct edge_ *tempEdge = tempNode->edges;//define head of the list as a temp edge
+        node *curr_node = tempNode;
+        tempEdge = tempNode->edges;
+        while (tempEdge)//moving all over edge in one node
+        {
+            int id_src = curr_node->node_num;
+            int id_dest = tempEdge->endpoint->node_num;
+            int weight = tempEdge->weight;
+            printf("tempNode->node_num: %ld ", id_src);
+            printf("tempEdge->endpoint->node_num: %ld ", id_dest);
+            printf("tempEdge->weight: %ld\n", weight);
 
-matOfEdgesAndNodes[tempNode->node_num][tempEdge->endpoint->node_num]=tempEdge->
-weight;//define every cell as [edge src][edge dest]
-tempEdge = tempEdge->next;
-}
-tempNode = tempNode->next;
-}
+            matOfEdgesAndNodes[tempNode->node_num][tempEdge->endpoint->node_num] = tempEdge->
+                    weight;//define every cell as [edge src][edge dest]
+            tempEdge = tempEdge->next;
+        }
+        tempNode = tempNode->next;
+    }
 //    return matOfEdgesAndNodes;
 }
 
@@ -297,7 +327,7 @@ int shortsPath_cmd(pnode *head, int src, int dest) {
     int **GeneralMAt = allocate_board(node_numbers, node_numbers);//decleare a matrix
     initMAT(head, *GeneralMAt);//put inside values od weight
     int check = 0;
-    node * tempNodeP = *head;
+    node *tempNodeP = *head;
     if (tempNodeP == NULL)//if the graph empty
     {
         printf("Dijsktra shortest path:%ld", -1);
@@ -317,7 +347,7 @@ int shortsPath_cmd(pnode *head, int src, int dest) {
 void TSP(pnode *head) {
     int cities, temp; //total number of the cities
     int min_dis = INT_MAX;
-    int temp_dis=0;
+    int temp_dis = 0;
     scanf(" %d", &cities);
 
 ///////////check if malloc isnt null///////
@@ -328,25 +358,25 @@ void TSP(pnode *head) {
     //int *arr_copy = (int *) malloc(cities * sizeof(int)); //create copy array
     //memcpy(arr_copy, arr, cities);
     for (int j = 1; j <= cities; j++) {
-        temp_dis=0;
-        for (int i = 0; i < cities-1; i++) {
+        temp_dis = 0;
+        for (int i = 0; i < cities - 1; i++) {
             temp = arr[i];
-            arr[i] = arr[i+1];
-            arr[i+1] = temp;
+            arr[i] = arr[i + 1];
+            arr[i + 1] = temp;
         }
-        for(int k=0;k< cities-1 && temp_dis!=INT_MAX;k++){
-            int curr_dis=shortsPath_cmd(head,arr[k],arr[k+1]);
-            if(curr_dis==-1)
-                temp_dis=INT_MAX;
+        for (int k = 0; k < cities - 1 && temp_dis != INT_MAX; k++) {
+            int curr_dis = shortsPath_cmd(head, arr[k], arr[k + 1]);
+            if (curr_dis == -1)
+                temp_dis = INT_MAX;
             else
-                temp_dis+=curr_dis ;
+                temp_dis += curr_dis;
         }
-        if(temp_dis<min_dis)
-            min_dis=temp_dis;
+        if (temp_dis < min_dis)
+            min_dis = temp_dis;
     }
-    if(min_dis==INT_MAX)
-        min_dis=-1;
-    printf("TSP shortest path: %d \n",min_dis);
+    if (min_dis == INT_MAX)
+        min_dis = -1;
+    printf("TSP shortest path: %d \n", min_dis);
     free(arr);
 }
 

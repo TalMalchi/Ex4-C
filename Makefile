@@ -16,8 +16,6 @@ main.o: main.c graphNew.h
 graph.o: graph.c graphNew.h
 	$(CC) $(FLAGS) -c graph.c
 
-
-
 #make clean
 .PHONY: clean all
 
