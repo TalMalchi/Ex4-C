@@ -2,6 +2,7 @@
 #include "graph.h"
 #include <malloc.h>
 #include <math.h>
+#include <limits.h>
 int node_numbers;
 
 
@@ -190,7 +191,7 @@ void Delete_node(pnode *head) {
 //    if (getNode(head, id) == 0) { //check if the node exist in the graph. if it do not exist
 //        insertNewNode(*head, id);//we will insert this node
 //    } else { // if the node in the graph, delete it is edges
-        deleteEdges(*head, id);//delete all edges go out from this node
+    deleteEdges(*head, id);//delete all edges go out from this node
     //}
     //function delete node (ONLY the node!!)
     deleteNode(*head, id);
@@ -222,7 +223,7 @@ void add_new_node(pnode *head){
 //            edge *curr_edge= edgeTemp;
 //            edgeTemp= edgeTemp->next; // increase the edge by 1
 //            free(curr_edge);
-        }
+    }
     int weight;
     int dest;
     while (scanf(" %d", &dest))
@@ -239,7 +240,7 @@ void add_new_node(pnode *head){
 int **allocate_board(int Rows, int Cols)
 {
     // allocate Rows rows, each row is a pointer to int
-    int **board = (int **)malloc(Rows * sizeof(int *));
+    int *board = (int *)malloc(Rows * sizeof(int *));
     int row;
 
     // for each row allocate Cols ints
@@ -263,15 +264,15 @@ void initMAT(node **headNode,int **matOfEdgesAndNodes)
 
         while(tempEdge->next != NULL)//moving all over edge in one node
         {
-printf("tempNode->node_num: %ld ",tempNode->node_num);
-printf("tempEdge->endpoint->node_num: %ld ",tempEdge->endpoint->node_num);
-printf("tempEdge->weight: %ld\n",tempEdge->weight);
+            printf("tempNode->node_num: %ld ",tempNode->node_num);
+            printf("tempEdge->endpoint->node_num: %ld ",tempEdge->endpoint->node_num);
+            printf("tempEdge->weight: %ld\n",tempEdge->weight);
 
             matOfEdgesAndNodes[tempNode->node_num][tempEdge->endpoint->node_num]=tempEdge->weight;//define every cell as [edge src][edge dest]
             tempEdge = tempEdge->next;
         }
         tempNode = tempNode->next;
-        }
+    }
 //    return matOfEdgesAndNodes;
 }
 int* Dijkstra(pnode *head,int **Graph, int num_of_nodes_in_g, int start) {//by using : https://www.programiz.com/dsa/dijkstra-algorithm
@@ -287,7 +288,7 @@ int* Dijkstra(pnode *head,int **Graph, int num_of_nodes_in_g, int start) {//by u
     for (i = 0; i < num_of_nodes_in_g; i++)
         for (j = 0; j < num_of_nodes_in_g; j++)
             if (Graph[i][j] == 0) //init all values as infinity
-                cost[i][j] = INFINITY;
+                cost[i][j] = INT_MAX;
             else
                 cost[i][j] = Graph[i][j];
 
@@ -302,7 +303,7 @@ int* Dijkstra(pnode *head,int **Graph, int num_of_nodes_in_g, int start) {//by u
     count = 1;
 
     while (count < num_of_nodes_in_g - 1) {
-        mindistance = INFINITY;
+        mindistance = INT_MAX;
 
         for (i = 0; i < num_of_nodes_in_g; i++)
             if (distance[i] < mindistance && !visited[i]) {
