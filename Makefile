@@ -7,6 +7,7 @@ AR= ar
 all: graph
 
 
+
 graph: main.o graph.o
 	$(CC) main.o graph.o -o graph
 
