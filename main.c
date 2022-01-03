@@ -27,20 +27,20 @@ int main() {
         else if (action == 'D'){ //remove node
           Delete_node(&head);
         }
-        else if (action == 'S') { //Shortest path
-            int src, dest, ans;
-            scanf(" %d", &src);
-            scanf(" %d", &dest);
-            ans= shortsPath_cmd(&head, src, dest);
-            printf("Dijsktra shortest path:%ld", ans);
-        }
-        else if (action == 'T') { //TSP
-            TSP(&head);
-        }
+//        else if (action == 'S') { //Shortest path
+//            int src, dest, ans;
+//            scanf(" %d", &src);
+//            scanf(" %d", &dest);
+//            ans= shortsPath_cmd(&head, src, dest);
+//            printf("Dijsktra shortest path:%ld", ans);
+//        }
+//        else if (action == 'T') { //TSP
+//            TSP(&head);
+//        }
 
-        else {
-            return 0;
-        }
+//        else {
+//            return 0;
+//        }
     }
 }
 

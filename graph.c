@@ -113,6 +113,10 @@ void deleteEdges(node **head, int id)///////////////////////////////problem in w
 
         free(temp);//free memory
     }
+    if (curr_node->edges== NULL)
+    {
+        printf("delete succeed");
+    }
 
 }
 
@@ -322,9 +326,9 @@ int* Dijkstra(pnode *head,int **Graph, int num_of_nodes_in_g, int start) {//by u
     return distance;//distance is array that the Distance from source to i is distance[i]
 }
 
-void shortsPath_cmd(pnode *head,int src,int dest) {
+int shortsPath_cmd(pnode *head,int src,int dest) {
     int **GeneralMAt=allocate_board(node_numbers,node_numbers);//decleare a matrix
-    initMAT(head,*GeneralMAt);//put inside values od weight
+    initMAT(head,GeneralMAt);//put inside values od weight
     int check = 0;
     node *tempNodeP = *head;
     if (tempNodeP == NULL)//if the graph empty
@@ -337,6 +341,7 @@ void shortsPath_cmd(pnode *head,int src,int dest) {
     }
     int *distance;
     //Dijkstra(pnode *head,int **Graph, int num_of_nodes_in_g, int start)
-    distance = Dijkstra(GeneralMAt,head, node_numbers, src);
-    printf("Dijsktra shortest path:%ld",distance[dest]) ;
+    distance = Dijkstra(head,GeneralMAt, node_numbers, src);
+    //printf("Dijsktra shortest path:%ld",distance[dest]) ;
+    return distance[dest];
 }
