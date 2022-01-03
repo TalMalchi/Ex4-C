@@ -345,3 +345,39 @@ int shortsPath_cmd(pnode *head,int src,int dest) {
     //printf("Dijsktra shortest path:%ld",distance[dest]) ;
     return distance[dest];
 }
+
+void TSP(pnode *head) {
+    int cities, temp; //total number of the cities
+    int min_dis = INT_MAX;
+    int temp_dis = 0;
+    scanf(" %d", &cities);
+
+///////////check if malloc isnt null///////
+    int *arr = (int *) malloc(cities * sizeof(int)); //init array of the cities
+    for (int i = 0; i < cities; ++i) {
+        scanf(" %d", &arr[i]);
+    }
+    //int *arr_copy = (int *) malloc(cities * sizeof(int)); //create copy array
+    //memcpy(arr_copy, arr, cities);
+    for (int j = 1; j <= cities; j++) {
+        temp_dis = 0;
+        for (int i = 0; i < cities - 1; i++) {
+            temp = arr[i];
+            arr[i] = arr[i + 1];
+            arr[i + 1] = temp;
+        }
+        for (int k = 0; k < cities - 1 && temp_dis != INT_MAX; k++) {
+            int curr_dis = shortsPath_cmd(head, arr[k], arr[k + 1]);
+            if (curr_dis == -1)
+                temp_dis = INT_MAX;
+            else
+                temp_dis += curr_dis;
+        }
+        if (temp_dis < min_dis)
+            min_dis = temp_dis;
+    }
+    if (min_dis == INT_MAX)
+        min_dis = -1;
+    printf("TSP shortest path: %d \n", min_dis);
+    free(arr);
+}
