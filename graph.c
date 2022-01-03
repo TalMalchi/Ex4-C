@@ -107,9 +107,9 @@ void deleteEdges(node **head, int id)///////////////////////////////problem in w
     while (curr_node->edges!=NULL)//moove over all edges
 //    while (curr_node->edges!=NULL)//moove over all edges
     {
-        temp = curr_node->edges->next;
+        temp = curr_node->edges;
 //        curr_node->edges->next = curr_node->edges->next->next;//edge will be disconnected from the linked list.
-        curr_node->edges->next = curr_node->edges->next->next;//edge will be disconnected from the linked list.
+        curr_node->edges = curr_node->edges->next;//edge will be disconnected from the linked list.
 
         free(temp);//free memory
     }
