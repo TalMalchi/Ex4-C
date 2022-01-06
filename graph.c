@@ -236,18 +236,39 @@ void add_new_node(pnode *head){
 
 
 //function to decleare a memory to matrix, by using :https://easysavecode.com/8DQJlYam
-int **allocate_board(int Rows, int Cols)
-{
-    // allocate Rows rows, each row is a pointer to int
-    int **board = (int **)malloc(Rows * sizeof(int *));
-    int row;
+//int **allocate_board(int Rows, int Cols)
+//{
+//    // allocate Rows rows, each row is a pointer to int
+//    int **board = (int **)malloc(Rows * sizeof(int *));
+//    int row;
+//
+//    // for each row allocate Cols ints
+//    for (row = 0; row < Rows; row++) {
+//        board[row] = (int *)calloc(Cols , sizeof(int));
+//    }
+//
+//    return board;
+//}
 
-    // for each row allocate Cols ints
-    for (row = 0; row < Rows; row++) {
-        board[row] = (int *)malloc(Cols * sizeof(int));
+int * allocfunc( int rows, int cols){
+    int i;
+    int ** array;
+    /* allocate the array */
+    array = malloc(rows * sizeof *array);
+    for (i=0; i<rows; i++)
+    {
+        array[i] = malloc(cols * sizeof *array[i]);
     }
-
-    return board;
+    for (i=0; i<rows; i++)
+    {
+        for (int j=0; j<cols; j++)
+        {
+            printf("i=%d j=%d" ,i,j);
+            array[i][j] = 0;
+        }
+    }
+    //printf("\narr=%d\n", array);
+    return array;
 }
 
 //function put all weights in matrix num_of_nodes*num_of_nodes by src and node
@@ -257,11 +278,11 @@ void initMAT(node **headNode,int **matOfEdgesAndNodes)
 //int matOfEdgesAndNodes[node_numbers][node_numbers];=allocate_board(node_numbers, node_numbers);//decleare a memory to matrix
     //int **matOfEdgesAndNodes = allocate_board(node_numbers,node_numbers);//decleare a memory to matrix
     struct GRAPH_NODE_ *tempNode = *headNode;//define head of the list as a temp node
-    while (tempNode->next != NULL) //moving all over nodes in graph
+    while (tempNode != NULL) //moving all over nodes in graph
     {
         struct edge_ *tempEdge = tempNode->edges;//define head of the list as a temp edge
 
-        while(tempEdge->next != NULL)//moving all over edge in one node
+        while(tempEdge != NULL)//moving all over edge in one node
         {
 printf("tempNode->node_num: %ld ",tempNode->node_num);
 printf("tempEdge->endpoint->node_num: %ld ",tempEdge->endpoint->node_num);
@@ -274,10 +295,10 @@ printf("tempEdge->weight: %ld\n",tempEdge->weight);
         }
 //    return matOfEdgesAndNodes;
 }
-int* Dijkstra(pnode *head,int **Graph, int num_of_nodes_in_g, int start) {//by using : https://www.programiz.com/dsa/dijkstra-algorithm
+int *Dijkstra(pnode *head,int **Graph, int num_of_nodes_in_g, int start) {//by using : https://www.programiz.com/dsa/dijkstra-algorithm
 
     int cost[num_of_nodes_in_g][num_of_nodes_in_g];/* 2D array declaration*/
-    int distance[num_of_nodes_in_g];
+    int *distance;
     int pred[num_of_nodes_in_g];
     int visited[num_of_nodes_in_g];
     int count;
@@ -285,18 +306,32 @@ int* Dijkstra(pnode *head,int **Graph, int num_of_nodes_in_g, int start) {//by u
     int nextnode, i, j;
     // Creating cost matrix
     for (i = 0; i < num_of_nodes_in_g; i++)
-        for (j = 0; j < num_of_nodes_in_g; j++)
+        for (j = 0; j < num_of_nodes_in_g; j++) {
+            printf("Graph[i][j]:%d i=%d j=%d\n", Graph[i][j], i, j);
             if (Graph[i][j] == 0) //init all values as infinity
                 cost[i][j] = INFINITY;
             else
                 cost[i][j] = Graph[i][j];
+        }
 
     for (i = 0; i < num_of_nodes_in_g; i++) {
         distance[i] = cost[start][i];
         pred[i] = start;
         visited[i] = 0;
     }
-
+//    for (i = 0; i < num_of_nodes_in_g; i++){
+//        for (j = 0; j < num_of_nodes_in_g; j++){
+//            printf("%d ",cost[i][j],i,j);
+//        }
+//        printf("\n");
+//    }
+//    for (j = 0; j < num_of_nodes_in_g; j++){
+//            printf("%d ",distance[j],j);
+//        }
+    for (j = 0; j < num_of_nodes_in_g; j++){
+        printf("%d ",pred[j],j);
+    }
+//        printf("\n");
     distance[start] = 0;
     visited[start] = 1;
     count = 1;
@@ -322,13 +357,31 @@ int* Dijkstra(pnode *head,int **Graph, int num_of_nodes_in_g, int start) {//by u
     //this is distance array:
     //index=dest:     0   1   2   ... n
     //weight:         x   y   z   ... f
-
+    printf("\n distance = ");
+    for (j = 0; j < num_of_nodes_in_g; j++){
+            printf("d=%d j=%d ",distance[j],j);
+        }
     return distance;//distance is array that the Distance from source to i is distance[i]
 }
-
+void printfunc(int** array, int rows, int cols)
+{
+    int i, j;
+    printf("r=%d, c=%d\n",rows,cols);
+    for (i=0; i<rows; i++)
+    {
+        for (j=0; j<cols; j++)
+        {
+            printf("%d ",array[i][j]);
+        }
+        printf("\n");
+    }
+}
 int shortsPath_cmd(pnode *head,int src,int dest) {
-    int **GeneralMAt=allocate_board(node_numbers,node_numbers);//decleare a matrix
+    int **GeneralMAt;
+    GeneralMAt=allocfunc(node_numbers,node_numbers);//decleare a matrix
+    printfunc(GeneralMAt, node_numbers,node_numbers);
     initMAT(head,GeneralMAt);//put inside values od weight
+    printfunc(GeneralMAt, node_numbers,node_numbers);
     int check = 0;
     node *tempNodeP = *head;
     if (tempNodeP == NULL)//if the graph empty
@@ -342,6 +395,43 @@ int shortsPath_cmd(pnode *head,int src,int dest) {
     int *distance;
     //Dijkstra(pnode *head,int **Graph, int num_of_nodes_in_g, int start)
     distance = Dijkstra(head,GeneralMAt, node_numbers, src);
-    //printf("Dijsktra shortest path:%ld",distance[dest]) ;
+    printf("Dijsktra shortest path:%ld",distance[dest]) ;
     return distance[dest];
+}
+
+
+void TSP(pnode *head) {
+    int cities, temp; //total number of the cities
+    int min_dis = INT_MAX;
+    int temp_dis = 0;
+    scanf(" %d", &cities);
+
+///////////check if malloc isnt null///////
+    int *arr = (int *) malloc(cities * sizeof(int)); //init array of the cities
+    for (int i = 0; i < cities; ++i) {
+        scanf(" %d", &arr[i]);
+    }
+    //int *arr_copy = (int *) malloc(cities * sizeof(int)); //create copy array
+    //memcpy(arr_copy, arr, cities);
+    for (int j = 1; j <= cities; j++) {
+        temp_dis = 0;
+        for (int i = 0; i < cities - 1; i++) {
+            temp = arr[i];
+            arr[i] = arr[i + 1];
+            arr[i + 1] = temp;
+        }
+        for (int k = 0; k < cities - 1 && temp_dis != INT_MAX; k++) {
+            int curr_dis = shortsPath_cmd(head, arr[k], arr[k + 1]);
+            if (curr_dis == -1)
+                temp_dis = INT_MAX;
+            else
+                temp_dis += curr_dis;
+        }
+        if (temp_dis < min_dis)
+            min_dis = temp_dis;
+    }
+    if (min_dis == INT_MAX)
+        min_dis = -1;
+    printf("TSP shortest path: %d \n", min_dis);
+    free(arr);
 }

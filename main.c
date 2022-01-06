@@ -19,21 +19,22 @@ int main() {
         //scanf(" %c", &action);
         //build_graph_cmd(head);
         if (action == 'A') {//worke good
-            deleteGraph_cmd(&head);
-            build_graph_cmd(&head);
-        } else if (action == 'B') { //add new node  //problem with delete edges
+            deleteGraph_cmd(&head);//done.after debugging
+            build_graph_cmd(&head);//done.after debugging
+        } else if (action == 'B') { //done.after debugging
             add_new_node(&head);
         }
-        else if (action == 'D'){ //remove node
-          Delete_node(&head);
-        }
-//        else if (action == 'S') { //Shortest path
-//            int src, dest, ans;
-//            scanf(" %d", &src);
-//            scanf(" %d", &dest);
-//            ans= shortsPath_cmd(&head, src, dest);
-//            printf("Dijsktra shortest path:%ld", ans);
+//        else if (action == 'D'){ //remove node ,need to check
+//          Delete_node(&head);
 //        }
+        else if (action == 'S') { //Shortest path
+            printf("Going");
+            int src, dest, ans;
+            scanf(" %d", &src);
+            scanf(" %d", &dest);
+            ans= shortsPath_cmd(&head, src, dest);
+            printf("Dijsktra shortest path:%ld", ans);
+        }
 //        else if (action == 'T') { //TSP
 //            TSP(&head);
 //        }
