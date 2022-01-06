@@ -11,13 +11,11 @@ all: graph
 graph: main.o graph.o
 	$(CC) main.o graph.o -o graph
 
-main.o: main.c graphNew.h
+main.o: main.c graph.h
 	$(CC) $(FLAGS) -c main.c
 
-graph.o: graph.c graphNew.h
+graph.o: graph.c graph.h
 	$(CC) $(FLAGS) -c graph.c
-
-
 
 #make clean
 .PHONY: clean all
