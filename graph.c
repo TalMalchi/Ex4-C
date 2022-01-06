@@ -190,7 +190,7 @@ void Delete_node(pnode *head) {
 //    if (getNode(head, id) == 0) { //check if the node exist in the graph. if it do not exist
 //        insertNewNode(*head, id);//we will insert this node
 //    } else { // if the node in the graph, delete it is edges
-        deleteEdges(*head, id);//delete all edges go out from this node
+    deleteEdges(*head, id);//delete all edges go out from this node
     //}
     //function delete node (ONLY the node!!)
     deleteNode(*head, id);
@@ -222,7 +222,7 @@ void add_new_node(pnode *head){
 //            edge *curr_edge= edgeTemp;
 //            edgeTemp= edgeTemp->next; // increase the edge by 1
 //            free(curr_edge);
-        }
+    }
     int weight;
     int dest;
     while (scanf(" %d", &dest))
@@ -284,15 +284,15 @@ void initMAT(node **headNode,int **matOfEdgesAndNodes)
 
         while(tempEdge != NULL)//moving all over edge in one node
         {
-printf("tempNode->node_num: %ld ",tempNode->node_num);
-printf("tempEdge->endpoint->node_num: %ld ",tempEdge->endpoint->node_num);
-printf("tempEdge->weight: %ld\n",tempEdge->weight);
+            printf("tempNode->node_num: %ld ",tempNode->node_num);
+            printf("tempEdge->endpoint->node_num: %ld ",tempEdge->endpoint->node_num);
+            printf("tempEdge->weight: %ld\n",tempEdge->weight);
 
             matOfEdgesAndNodes[tempNode->node_num][tempEdge->endpoint->node_num]=tempEdge->weight;//define every cell as [edge src][edge dest]
             tempEdge = tempEdge->next;
         }
         tempNode = tempNode->next;
-        }
+    }
 //    return matOfEdgesAndNodes;
 }
 int *Dijkstra(pnode *head,int **Graph, int num_of_nodes_in_g, int start) {//by using : https://www.programiz.com/dsa/dijkstra-algorithm
@@ -359,8 +359,8 @@ int *Dijkstra(pnode *head,int **Graph, int num_of_nodes_in_g, int start) {//by u
     //weight:         x   y   z   ... f
     printf("\n distance = ");
     for (j = 0; j < num_of_nodes_in_g; j++){
-            printf("d=%d j=%d ",distance[j],j);
-        }
+        printf("d=%d j=%d ",distance[j],j);
+    }
     return distance;//distance is array that the Distance from source to i is distance[i]
 }
 void printfunc(int** array, int rows, int cols)
