@@ -29,11 +29,22 @@ int main() {
           Delete_node(&head);
         }
         else if (action == 'S') { //Shortest path
-            //printf("Going");
             int src, dest, ans;
             scanf(" %d", &src);
             scanf(" %d", &dest);
+            if (head == NULL)//if the graph empty
+            {
+                printf("Dijsktra shortest path:%ld",-1);
+            }
+            if (src == dest) //if source is equal to dest
+            {
+                printf("Dijsktra shortest path:%ld",0) ;
+            }
             ans= shortsPath_cmd(&head, src, dest);
+            if(ans==999999)
+            {
+                printf("Dijsktra shortest path:%ld",-1);
+            }
             printf("Dijsktra shortest path:%ld", ans);
         }
         else if (action == 'T') { //TSP

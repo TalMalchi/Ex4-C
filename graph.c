@@ -195,20 +195,16 @@ void deleteGraph_cmd(pnode *head) {
 void Delete_node(pnode *head) {
     int id;
     scanf(" %d", &id);//id of the new node
-    printf("1node deleted=%d\n ", id);
     deleteEdges_TONode(head, id);
 //    if (getNode(head, id) == 0) { //check if the node exist in the graph. if it do not exist
 //        insertNewNode(*head, id);//we will insert this node
 //    } else { // if the node in the graph, delete it is edges
-    printf("1node deleted=%d\n ", id);
 
     deleteEdges_FromNode(head, id);//delete all edges go out from this node
-    printf("2node deleted=%d\n ", id);
 
     //}
     //function delete node (ONLY the node!!)
     deleteNode(head, id);
-    printf("3node deleted=%d\n ", id);
 
     //now we will moove over all nodes and their edges , and check if the  this node is dest node
    /* pnode temp = *head; //define temp node to the head
@@ -227,9 +223,6 @@ void Delete_node(pnode *head) {
         }
 
     }*/
-    printf("node deleted=%d\n ", id);
-
-
 }
 
 //function delete edges go out from node
@@ -461,19 +454,19 @@ int shortsPath_cmd(pnode *head,int src,int dest) {
     initMAT(head,GeneralMAt);//put inside values od weight
     //printfunc(GeneralMAt, MAX_id,MAX_id);
     int check = 0;
-    node *tempNodeP = *head;
-    if (tempNodeP == NULL)//if the graph empty
-    {
-        printf("Dijsktra shortest path:%ld",-1) ;
-    }
-    if (src == dest) //if source is equal to dest
-    {
-        printf("Dijsktra shortest path:%ld",0) ;
-    }
+   // node *tempNodeP = *head;
+//    if (tempNodeP == NULL)//if the graph empty
+//    {
+//        printf("Dijsktra shortest path:%ld",-1) ;
+//    }
+//    if (src == dest) //if source is equal to dest
+//    {
+//        printf("Dijsktra shortest path:%ld",0) ;
+//    }
     int *distance;
     //Dijkstra(pnode *head,int **Graph, int num_of_nodes_in_g, int start)
     distance = Dijkstra(head,GeneralMAt, MAX_id, src);
-    printf("Dijsktra shortest path:%ld\n",distance[dest]) ;
+//    printf("Dijsktra shortest path:%ld\n",distance[dest]) ;
     return distance[dest];
 }
 
@@ -490,7 +483,7 @@ void TSP(pnode *head) {
         scanf(" %d", &arr[i]);
         //printf("in TSP check city %d ",arr[i]);
     }
-    printf("\n");
+//    printf("\n");
     //int *arr_copy = (int *) malloc(cities * sizeof(int)); //create copy array
     //memcpy(arr_copy, arr, cities);
     for (int j = 1; j <= cities; j++) {
