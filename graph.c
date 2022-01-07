@@ -36,7 +36,6 @@ void insertNewNode(node **head, int id) {
     {
         MAX_id=id+1;
     }
-    free(newNode);
 }
 
 
@@ -62,7 +61,6 @@ void insertNewEdge(node **Nhead,int Nsrc, int weight, int dest) {
 
         lastEdge->next = newEdge;  //add the newEdge at the end of the linked list
     }
-    free(newEdge);
 }
 
 pnode getNode(node **head, int id) { // retrun a NODE
@@ -82,8 +80,8 @@ void build_graph_cmd(pnode *head) {
     //deleteGraph_cmd(head);
     int id_node_src;
     int node_dest;
-    int weight=0;
-    int counter=0;
+    int weight;
+    int counter;
     char n;
     scanf(" %d", &node_numbers); //scan node numbers
     while (counter < node_numbers) {
@@ -209,22 +207,22 @@ void Delete_node(pnode *head) {
     deleteNode(head, id);
 
     //now we will moove over all nodes and their edges , and check if the  this node is dest node
-   /* pnode temp = *head; //define temp node to the head
-    edge *edge_temp;
-    while (temp!=NULL) // moove all over the nodes
-    {
-        edge_temp = temp->edges; // init temp_edge to point the edges of
-        while (edge_temp!=NULL) { //noove over all edges in node
-            {
-                if(edge_temp->endpoint->node_num ==id)//if this is the dest node, we will remove this edge
-                {
-                    free(edge_temp);
-                    printf("node deleted");
-                }
-            }
-        }
+    /* pnode temp = *head; //define temp node to the head
+     edge *edge_temp;
+     while (temp!=NULL) // moove all over the nodes
+     {
+         edge_temp = temp->edges; // init temp_edge to point the edges of
+         while (edge_temp!=NULL) { //noove over all edges in node
+             {
+                 if(edge_temp->endpoint->node_num ==id)//if this is the dest node, we will remove this edge
+                 {
+                     free(edge_temp);
+                     printf("node deleted");
+                 }
+             }
+         }
 
-    }*/
+     }*/
 }
 
 //function delete edges go out from node
@@ -326,8 +324,7 @@ int * allocfunc( int rows, int cols){
             array[i][j] = 0;
         }
     }
-    free(array);
-    //printf("\narr=%d\n", array)
+    //printf("\narr=%d\n", array);
     return array;
 }
 
@@ -394,9 +391,9 @@ int *Dijkstra(pnode *head,int **Graph, int num_of_nodes_in_g, int start) {//by u
 //            printf("%d ",distance[j],j);
 //        }
     //for (j = 0; j < num_of_nodes_in_g; j++){
-     //   printf("%d ",pred[j],j);
+    //   printf("%d ",pred[j],j);
     //}
-        //printf("start=%d\n",start);
+    //printf("start=%d\n",start);
     distance[start] = 0;
     visited[start] = 1;
     count = 1;
@@ -434,7 +431,6 @@ int *Dijkstra(pnode *head,int **Graph, int num_of_nodes_in_g, int start) {//by u
 //    for (j = 0; j < num_of_nodes_in_g; j++){
 //        printf("d=%d j=%d ",distance[j],j);
 //    }
-free(distance);
     return distance;//distance is array that the Distance from source to i is distance[i]
 }
 void printfunc(int** array, int rows, int cols)
@@ -458,7 +454,7 @@ int shortsPath_cmd(pnode *head,int src,int dest) {
     initMAT(head,GeneralMAt);//put inside values od weight
     //printfunc(GeneralMAt, MAX_id,MAX_id);
     int check = 0;
-   // node *tempNodeP = *head;
+    // node *tempNodeP = *head;
 //    if (tempNodeP == NULL)//if the graph empty
 //    {
 //        printf("Dijsktra shortest path:%ld",-1) ;

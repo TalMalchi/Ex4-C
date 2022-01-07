@@ -26,7 +26,7 @@ int main() {
             add_new_node(&head);
         }
         else if (action == 'D'){ //remove node ,need to check
-          Delete_node(&head);
+            Delete_node(&head);
         }
         else if (action == 'S') { //Shortest path
             int src, dest, ans;
