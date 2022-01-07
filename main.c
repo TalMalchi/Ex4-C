@@ -21,17 +21,13 @@ int main() {
         if (action == 'A') {//worke good
             deleteGraph_cmd(&head);//done.after debugging
             head = NULL;
-            if(head==NULL)
-            {
-                printf("head=null");
-            }
             build_graph_cmd(&head);//done.after debugging
         } else if (action == 'B') { //done.after debugging
             add_new_node(&head);
         }
-//        else if (action == 'D'){ //remove node ,need to check
-//          Delete_node(&head);
-//        }
+        else if (action == 'D'){ //remove node ,need to check
+          Delete_node(&head);
+        }
         else if (action == 'S') { //Shortest path
             //printf("Going");
             int src, dest, ans;
@@ -44,9 +40,9 @@ int main() {
             TSP(&head);
         }
 
-//        else {
-//            return 0;
-//        }
+        else {
+            return 0;
+        }
     }
 }
 
