@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include "graph.h"
 #include <malloc.h>
-#include <math.h>
+//#include <math.h>
+#define INFINITY 999999
 int node_numbers;
-
+int MAX_id=-1;
 
 //with using :
 //https://www.log2base2.com/data-structures/linked-list/inserting-a-node-at-the-end-of-a-linked-list.html
@@ -11,6 +12,7 @@ int node_numbers;
 void insertNewNode(node **head, int id) {
     //void insertNewNode (pnode **head,int id) {
     struct GRAPH_NODE_ *newNode = malloc(sizeof(struct GRAPH_NODE_)); //create a new node
+    printf("inserting node_id_num=%d\n",id);
     //struct NODE *newNode; //create a new node
     newNode->node_num = id;
     newNode->next = NULL;
@@ -30,7 +32,10 @@ void insertNewNode(node **head, int id) {
             lastNode->next = newNode;  //we will add the newNode at the end of the linked list
         }
     }
-
+    if(MAX_id<id+1)
+    {
+        MAX_id=id+1;
+    }
 }
 
 
@@ -113,10 +118,11 @@ void deleteEdges(node **head, int id)///////////////////////////////problem in w
 
         free(temp);//free memory
     }
-    if (curr_node->edges== NULL)
-    {
-        printf("delete succeed");
-    }
+    //just for debugging
+//    if (curr_node->edges== NULL)
+//    {
+//        printf("delete succeed");
+//    }
 
 }
 
@@ -163,20 +169,22 @@ void deleteNode(node **head, int key) {
 }
 
 void deleteGraph_cmd(pnode *head) {
+    MAX_id=-1;
     if (*head == NULL) {
         return;
     }
     pnode temp = *head; //init temp node to the head
     edge *edge_temp;
-    while (temp) { // go all over the nodes
+    while (temp!=NULL) { // go all over the nodes
         node *curr_node = temp; //init curr node
         edge_temp = temp->edges; // init temp_edge to point the edges of
-        while (edge_temp) { //go all over the edges in the node
+        while (edge_temp!=NULL) { //go all over the edges in the node
             edge *curr_edge = edge_temp;
             edge_temp = edge_temp->next; // increase the edge by 1
             free(curr_edge);
         }
         temp = temp->next;
+        printf("deleting node num:%d\n",curr_node->node_num);
         free(curr_node);
         //deleteNode(head,)
     }
@@ -211,7 +219,6 @@ void add_new_node(pnode *head){
         //insertNewNode(*head, id);//we will insert this node
 //        insertNewNode(&head, id);
         insertNewNode(head, id);
-
     }
     else { // if the node in the graph, delete it is edges
         deleteEdges(head, id);//delete all edges go out from this node
@@ -263,7 +270,7 @@ int * allocfunc( int rows, int cols){
     {
         for (int j=0; j<cols; j++)
         {
-            printf("i=%d j=%d" ,i,j);
+            //printf("i=%d j=%d " ,i,j);
             array[i][j] = 0;
         }
     }
@@ -298,23 +305,28 @@ void initMAT(node **headNode,int **matOfEdgesAndNodes)
 int *Dijkstra(pnode *head,int **Graph, int num_of_nodes_in_g, int start) {//by using : https://www.programiz.com/dsa/dijkstra-algorithm
 
     int cost[num_of_nodes_in_g][num_of_nodes_in_g];/* 2D array declaration*/
-    int *distance;
+    int *distance=(int*)malloc(num_of_nodes_in_g * sizeof(int));
     int pred[num_of_nodes_in_g];
     int visited[num_of_nodes_in_g];
     int count;
     int mindistance;
-    int nextnode, i, j;
+    int nextnode=0, i, j;
+    //printf("nextnode=%d\n",nextnode);
     // Creating cost matrix
     for (i = 0; i < num_of_nodes_in_g; i++)
         for (j = 0; j < num_of_nodes_in_g; j++) {
-            printf("Graph[i][j]:%d i=%d j=%d\n", Graph[i][j], i, j);
-            if (Graph[i][j] == 0) //init all values as infinity
+            //printf("Graph[i][j]:%d i=%d j=%d\n", Graph[i][j], i, j);
+            //printf("INFINITY = %d\n", INFINITY);
+            if (Graph[i][j] == 0) { //init all values as infinity
                 cost[i][j] = INFINITY;
+                //printf("cost inf=%d\n", cost[i][j]);
+            }
             else
                 cost[i][j] = Graph[i][j];
         }
-
+    //printf("stam1 start=%d\n",start);
     for (i = 0; i < num_of_nodes_in_g; i++) {
+        //printf("stam3 i=%d start=%d\n",i,start);
         distance[i] = cost[start][i];
         pred[i] = start;
         visited[i] = 0;
@@ -328,39 +340,47 @@ int *Dijkstra(pnode *head,int **Graph, int num_of_nodes_in_g, int start) {//by u
 //    for (j = 0; j < num_of_nodes_in_g; j++){
 //            printf("%d ",distance[j],j);
 //        }
-    for (j = 0; j < num_of_nodes_in_g; j++){
-        printf("%d ",pred[j],j);
-    }
-//        printf("\n");
+    //for (j = 0; j < num_of_nodes_in_g; j++){
+     //   printf("%d ",pred[j],j);
+    //}
+        //printf("start=%d\n",start);
     distance[start] = 0;
     visited[start] = 1;
     count = 1;
-
+    //printf("\n distance1 = ");
+//    for (j = 0; j < num_of_nodes_in_g; j++){
+//        printf("d=%d j=%d ",distance[j],j);
+//    }
     while (count < num_of_nodes_in_g - 1) {
         mindistance = INFINITY;
-
+        //printf("Yuval1 nextnode=%d\n",nextnode);
         for (i = 0; i < num_of_nodes_in_g; i++)
             if (distance[i] < mindistance && !visited[i]) {
                 mindistance = distance[i];
                 nextnode = i;
+                //printf("Yuval3 nextnode=%d\n",nextnode);
             }
-
-        visited[nextnode] = 1;
+        //printf("Yuval2 nextnode=%d mindistance=%d\n",nextnode,mindistance);
+        if(mindistance!=INFINITY) {
+            visited[nextnode] = 1;
+        }
         for (i = 0; i < num_of_nodes_in_g; i++)
-            if (!visited[i])
+            if (!visited[i]) {
+                //printf("mindistance=%d mindistance + cost[nextnode][i]=%d\n",mindistance,mindistance + cost[nextnode][i]);
                 if (mindistance + cost[nextnode][i] < distance[i]) {
                     distance[i] = mindistance + cost[nextnode][i];
                     pred[i] = nextnode;
                 }
+            }
         count++;
     }
     //this is distance array:
     //index=dest:     0   1   2   ... n
     //weight:         x   y   z   ... f
-    printf("\n distance = ");
-    for (j = 0; j < num_of_nodes_in_g; j++){
-        printf("d=%d j=%d ",distance[j],j);
-    }
+//    printf("\n distance = ");
+//    for (j = 0; j < num_of_nodes_in_g; j++){
+//        printf("d=%d j=%d ",distance[j],j);
+//    }
     return distance;//distance is array that the Distance from source to i is distance[i]
 }
 void printfunc(int** array, int rows, int cols)
@@ -378,10 +398,11 @@ void printfunc(int** array, int rows, int cols)
 }
 int shortsPath_cmd(pnode *head,int src,int dest) {
     int **GeneralMAt;
-    GeneralMAt=allocfunc(node_numbers,node_numbers);//decleare a matrix
-    printfunc(GeneralMAt, node_numbers,node_numbers);
+    printf("in shortest path src=%d dest=%d MAX_id=%d\n",src,dest,MAX_id);
+    GeneralMAt=allocfunc(MAX_id,MAX_id);//decleare a matrix
+    printfunc(GeneralMAt, MAX_id,MAX_id);
     initMAT(head,GeneralMAt);//put inside values od weight
-    printfunc(GeneralMAt, node_numbers,node_numbers);
+    printfunc(GeneralMAt, MAX_id,MAX_id);
     int check = 0;
     node *tempNodeP = *head;
     if (tempNodeP == NULL)//if the graph empty
@@ -394,15 +415,15 @@ int shortsPath_cmd(pnode *head,int src,int dest) {
     }
     int *distance;
     //Dijkstra(pnode *head,int **Graph, int num_of_nodes_in_g, int start)
-    distance = Dijkstra(head,GeneralMAt, node_numbers, src);
-    printf("Dijsktra shortest path:%ld",distance[dest]) ;
+    distance = Dijkstra(head,GeneralMAt, MAX_id, src);
+    printf("Dijsktra shortest path:%ld\n",distance[dest]) ;
     return distance[dest];
 }
 
 
 void TSP(pnode *head) {
     int cities, temp; //total number of the cities
-    int min_dis = INT_MAX;
+    int min_dis = INFINITY;
     int temp_dis = 0;
     scanf(" %d", &cities);
 
@@ -410,7 +431,9 @@ void TSP(pnode *head) {
     int *arr = (int *) malloc(cities * sizeof(int)); //init array of the cities
     for (int i = 0; i < cities; ++i) {
         scanf(" %d", &arr[i]);
+        printf("in TSP check city %d ",arr[i]);
     }
+    printf("\n");
     //int *arr_copy = (int *) malloc(cities * sizeof(int)); //create copy array
     //memcpy(arr_copy, arr, cities);
     for (int j = 1; j <= cities; j++) {
@@ -420,18 +443,22 @@ void TSP(pnode *head) {
             arr[i] = arr[i + 1];
             arr[i + 1] = temp;
         }
-        for (int k = 0; k < cities - 1 && temp_dis != INT_MAX; k++) {
+        for (int k = 0; k < cities - 1 && temp_dis != INFINITY; k++) {
+
             int curr_dis = shortsPath_cmd(head, arr[k], arr[k + 1]);
-            if (curr_dis == -1)
-                temp_dis = INT_MAX;
+            if (curr_dis == INFINITY)
+                temp_dis = INFINITY;
             else
                 temp_dis += curr_dis;
         }
+        //printf("temp_dis=%d min_dis=%d\n",temp_dis,min_dis);
         if (temp_dis < min_dis)
             min_dis = temp_dis;
     }
-    if (min_dis == INT_MAX)
+    if (min_dis == INFINITY)
+    {
         min_dis = -1;
+    }
     printf("TSP shortest path: %d \n", min_dis);
     free(arr);
 }
