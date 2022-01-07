@@ -36,6 +36,7 @@ void insertNewNode(node **head, int id) {
     {
         MAX_id=id+1;
     }
+    free(newNode);
 }
 
 
@@ -61,6 +62,7 @@ void insertNewEdge(node **Nhead,int Nsrc, int weight, int dest) {
 
         lastEdge->next = newEdge;  //add the newEdge at the end of the linked list
     }
+    free(newEdge);
 }
 
 pnode getNode(node **head, int id) { // retrun a NODE
@@ -80,8 +82,8 @@ void build_graph_cmd(pnode *head) {
     //deleteGraph_cmd(head);
     int id_node_src;
     int node_dest;
-    int weight;
-    int counter;
+    int weight=0;
+    int counter=0;
     char n;
     scanf(" %d", &node_numbers); //scan node numbers
     while (counter < node_numbers) {
@@ -324,7 +326,8 @@ int * allocfunc( int rows, int cols){
             array[i][j] = 0;
         }
     }
-    //printf("\narr=%d\n", array);
+    free(array);
+    //printf("\narr=%d\n", array)
     return array;
 }
 
@@ -431,6 +434,7 @@ int *Dijkstra(pnode *head,int **Graph, int num_of_nodes_in_g, int start) {//by u
 //    for (j = 0; j < num_of_nodes_in_g; j++){
 //        printf("d=%d j=%d ",distance[j],j);
 //    }
+free(distance);
     return distance;//distance is array that the Distance from source to i is distance[i]
 }
 void printfunc(int** array, int rows, int cols)
