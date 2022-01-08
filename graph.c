@@ -11,14 +11,17 @@ int MAX_id=-1;
 
 void insertNewNode(node **head, int id) {
     //void insertNewNode (pnode **head,int id) {
-    struct GRAPH_NODE_ *newNode = malloc(sizeof(struct GRAPH_NODE_)); //create a new node
-    //printf("inserting node_id_num=%d\n",id);
-    //struct NODE *newNode; //create a new node
-    newNode->node_num = id;
-    newNode->next = NULL;
-    newNode->edges = NULL;
+
     if (*head == NULL) { //if head is NULL, it is an empty list
+        struct GRAPH_NODE_ *newNode = malloc(sizeof(struct GRAPH_NODE_)); //create a new node
+        //printf("inserting node_id_num=%d\n",id);
+        //struct NODE *newNode; //create a new node
+        newNode->node_num = id;
+        newNode->next = NULL;
+        newNode->edges = NULL;
+
         *head = newNode;
+
     } else //else, find the last node and add the newNode
     {
         struct GRAPH_NODE_ *lastNode = *head;
@@ -29,13 +32,25 @@ void insertNewNode(node **head, int id) {
 
         if (lastNode->node_num !=id)//if we exit from the while because (lastNode->node_num==id) we will not add the new node, if it do not exist ,than :
         {
+            struct GRAPH_NODE_ *newNode = malloc(sizeof(struct GRAPH_NODE_)); //create a new node
+            //printf("inserting node_id_num=%d\n",id);
+            //struct NODE *newNode; //create a new node
+            newNode->node_num = id;
+            newNode->next = NULL;
+            newNode->edges = NULL;
             lastNode->next = newNode;  //we will add the newNode at the end of the linked list
         }
+        //else{
+        //    free(newNode);
+        //    newNode=NULL;
+        //}
+
     }
     if(MAX_id<id+1)
     {
         MAX_id=id+1;
     }
+
 }
 
 
@@ -52,6 +67,7 @@ void insertNewEdge(node **Nhead,int Nsrc, int weight, int dest) {
         src_node->edges = newEdge;
 
     } else //else, find the last node and add the newNode
+
     {
         struct edge_ *lastEdge = src_node->edges;
         while (lastEdge->next != NULL) //we will moove over all edges in node,last Edges's next address will be NULL.
@@ -60,6 +76,7 @@ void insertNewEdge(node **Nhead,int Nsrc, int weight, int dest) {
         }
 
         lastEdge->next = newEdge;  //add the newEdge at the end of the linked list
+
     }
 }
 
@@ -78,22 +95,24 @@ pnode getNode(node **head, int id) { // retrun a NODE
 
 void build_graph_cmd(pnode *head) {
     //deleteGraph_cmd(head);
-    int id_node_src;
-    int node_dest;
-    int weight;
-    int counter;
-    char n;
+    int id_node_src=0;
+    int node_dest=0;
+    int weight=0;
+    int counter=0;
+    char n='a';
     scanf(" %d", &node_numbers); //scan node numbers
     while (counter < node_numbers) {
         scanf(" %c", &n); //scan char 'n'
         counter++;
         scanf(" %d", &id_node_src);//get first node
         insertNewNode(head, id_node_src);
+
         while (scanf(" %d", &node_dest)) { //start to moove over all dest weight dest weight etc. until we get more 'n'
             insertNewNode(head, node_dest);
             scanf(" %d", &weight);
             insertNewEdge(head,id_node_src, weight, node_dest);
         }
+
     }
 }
 
@@ -144,7 +163,8 @@ void deleteEdges_FromNode(node **head, int id)///////////////////////////////pro
 
 //function delete node (ONLY the node!!)
 void deleteNode(node **head, int key) {
-    struct node *temp = NULL;//temp is used to freeing the memory
+//    struct node *temp = NULL;//temp is used to freeing the memory
+    node *temp = NULL;//temp is used to freeing the memory
 
     //key found on the head node.
     //move to head node to the next and free the head.
@@ -188,6 +208,9 @@ void deleteGraph_cmd(pnode *head) {
         free(curr_node);
         //deleteNode(head,)
     }
+    // if(temp==NULL){printf("temp is null\n");}
+    // if(head==NULL){printf("head is null\n");}
+    //free(head);
 
 }
 
@@ -307,7 +330,7 @@ void add_new_node(pnode *head){
 //    return board;
 //}
 
-int * allocfunc( int rows, int cols){
+int ** allocfunc( int rows, int cols){
     int i;
     int ** array;
     /* allocate the array */
@@ -356,11 +379,11 @@ int *Dijkstra(pnode *head,int **Graph, int num_of_nodes_in_g, int start) {//by u
 
     int cost[num_of_nodes_in_g][num_of_nodes_in_g];/* 2D array declaration*/
     int *distance=(int*)malloc(num_of_nodes_in_g * sizeof(int));
-    int pred[num_of_nodes_in_g];
+    //int pred[num_of_nodes_in_g];
     int visited[num_of_nodes_in_g];
-    int count;
-    int mindistance;
-    int nextnode=0, i, j;
+    int count=0;
+    int mindistance=0;
+    int nextnode=0, i=0, j=0;
     //printf("nextnode=%d\n",nextnode);
     // Creating cost matrix
     for (i = 0; i < num_of_nodes_in_g; i++)
@@ -378,7 +401,7 @@ int *Dijkstra(pnode *head,int **Graph, int num_of_nodes_in_g, int start) {//by u
     for (i = 0; i < num_of_nodes_in_g; i++) {
         //printf("stam3 i=%d start=%d\n",i,start);
         distance[i] = cost[start][i];
-        pred[i] = start;
+        //pred[i] = start;
         visited[i] = 0;
     }
 //    for (i = 0; i < num_of_nodes_in_g; i++){
@@ -419,7 +442,7 @@ int *Dijkstra(pnode *head,int **Graph, int num_of_nodes_in_g, int start) {//by u
                 //printf("mindistance=%d mindistance + cost[nextnode][i]=%d\n",mindistance,mindistance + cost[nextnode][i]);
                 if (mindistance + cost[nextnode][i] < distance[i]) {
                     distance[i] = mindistance + cost[nextnode][i];
-                    pred[i] = nextnode;
+                    //pred[i] = nextnode;
                 }
             }
         count++;
@@ -453,7 +476,7 @@ int shortsPath_cmd(pnode *head,int src,int dest) {
     //printfunc(GeneralMAt, MAX_id,MAX_id);
     initMAT(head,GeneralMAt);//put inside values od weight
     //printfunc(GeneralMAt, MAX_id,MAX_id);
-    int check = 0;
+    //int check = 0;
     // node *tempNodeP = *head;
 //    if (tempNodeP == NULL)//if the graph empty
 //    {
@@ -467,7 +490,15 @@ int shortsPath_cmd(pnode *head,int src,int dest) {
     //Dijkstra(pnode *head,int **Graph, int num_of_nodes_in_g, int start)
     distance = Dijkstra(head,GeneralMAt, MAX_id, src);
 //    printf("Dijsktra shortest path:%ld\n",distance[dest]) ;
-    return distance[dest];
+    int tempDistance=distance[dest];
+    for (int i=0; i<MAX_id; i++) /* deallocate the array */
+    {
+        free(GeneralMAt[i]);
+    }
+    free(GeneralMAt);
+
+    free (distance);/* deallocate the array */
+    return tempDistance;
 }
 
 

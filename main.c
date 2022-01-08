@@ -20,9 +20,12 @@ int main() {
         //build_graph_cmd(head);
         if (action == 'A') {//worke good
             deleteGraph_cmd(&head);//done.after debugging
+            // free(head);
             head = NULL;
             build_graph_cmd(&head);//done.after debugging
-        } else if (action == 'B') { //done.after debugging
+
+        }
+        else if (action == 'B') { //done.after debugging
             add_new_node(&head);
         }
         else if (action == 'D'){ //remove node ,need to check
@@ -34,27 +37,33 @@ int main() {
             scanf(" %d", &dest);
             if (head == NULL)//if the graph empty
             {
-                printf("Dijsktra shortest path:%ld",-1);
+                printf("Dijsktra shortest path:%d",-1);
             }
             if (src == dest) //if source is equal to dest
             {
-                printf("Dijsktra shortest path:%ld",0) ;
+                printf("Dijsktra shortest path:%d",0) ;
             }
             ans= shortsPath_cmd(&head, src, dest);
             if(ans==999999)
             {
-                printf("Dijsktra shortest path:%ld",-1);
+                printf("Dijsktra shortest path:%d",-1);
             }
-            printf("Dijsktra shortest path:%ld", ans);
+            printf("Dijsktra shortest path:%d", ans);
         }
         else if (action == 'T') { //TSP
             TSP(&head);
         }
 
         else {
+            deleteGraph_cmd(&head);//done.after debugging
+            free(head);
+            head = NULL;
             return 0;
         }
     }
+    deleteGraph_cmd(&head);//done.after debugging
+    //free(head);
+    head = NULL;
 }
 
 //}

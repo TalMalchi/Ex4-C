@@ -44,7 +44,7 @@ void initMAT(pnode *headNode, int **matOfEdgesAndNodes);
 int *Dijkstra(pnode *head, int **Graph, int num_of_nodes_in_g,int start);
 //int **allocate_board(int Rows, int Cols);
 
-int * allocfunc( int rows, int cols);
+int ** allocfunc( int rows, int cols);
 
 
 
