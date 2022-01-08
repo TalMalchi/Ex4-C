@@ -11,14 +11,17 @@ int MAX_id=-1;
 
 void insertNewNode(node **head, int id) {
     //void insertNewNode (pnode **head,int id) {
-    struct GRAPH_NODE_ *newNode = malloc(sizeof(struct GRAPH_NODE_)); //create a new node
-    //printf("inserting node_id_num=%d\n",id);
-    //struct NODE *newNode; //create a new node
-    newNode->node_num = id;
-    newNode->next = NULL;
-    newNode->edges = NULL;
+
     if (*head == NULL) { //if head is NULL, it is an empty list
+        struct GRAPH_NODE_ *newNode = malloc(sizeof(struct GRAPH_NODE_)); //create a new node
+        //printf("inserting node_id_num=%d\n",id);
+        //struct NODE *newNode; //create a new node
+        newNode->node_num = id;
+        newNode->next = NULL;
+        newNode->edges = NULL;
+
         *head = newNode;
+
     } else //else, find the last node and add the newNode
     {
         struct GRAPH_NODE_ *lastNode = *head;
@@ -29,9 +32,19 @@ void insertNewNode(node **head, int id) {
 
         if (lastNode->node_num !=id)//if we exit from the while because (lastNode->node_num==id) we will not add the new node, if it do not exist ,than :
         {
+            struct GRAPH_NODE_ *newNode = malloc(sizeof(struct GRAPH_NODE_)); //create a new node
+            //printf("inserting node_id_num=%d\n",id);
+            //struct NODE *newNode; //create a new node
+            newNode->node_num = id;
+            newNode->next = NULL;
+            newNode->edges = NULL;
             lastNode->next = newNode;  //we will add the newNode at the end of the linked list
         }
-        //free(newNode);
+        //else{
+        //    free(newNode);
+        //    newNode=NULL;
+        //}
+
     }
     if(MAX_id<id+1)
     {
@@ -65,7 +78,6 @@ void insertNewEdge(node **Nhead,int Nsrc, int weight, int dest) {
         lastEdge->next = newEdge;  //add the newEdge at the end of the linked list
 
     }
-    //free(newEdge);
 }
 
 pnode getNode(node **head, int id) { // retrun a NODE
@@ -94,11 +106,13 @@ void build_graph_cmd(pnode *head) {
         counter++;
         scanf(" %d", &id_node_src);//get first node
         insertNewNode(head, id_node_src);
+
         while (scanf(" %d", &node_dest)) { //start to moove over all dest weight dest weight etc. until we get more 'n'
             insertNewNode(head, node_dest);
             scanf(" %d", &weight);
             insertNewEdge(head,id_node_src, weight, node_dest);
         }
+
     }
 }
 
@@ -194,6 +208,9 @@ void deleteGraph_cmd(pnode *head) {
         free(curr_node);
         //deleteNode(head,)
     }
+    // if(temp==NULL){printf("temp is null\n");}
+    // if(head==NULL){printf("head is null\n");}
+    //free(head);
 
 }
 
@@ -473,7 +490,15 @@ int shortsPath_cmd(pnode *head,int src,int dest) {
     //Dijkstra(pnode *head,int **Graph, int num_of_nodes_in_g, int start)
     distance = Dijkstra(head,GeneralMAt, MAX_id, src);
 //    printf("Dijsktra shortest path:%ld\n",distance[dest]) ;
-    return distance[dest];
+    int tempDistance=distance[dest];
+    for (int i=0; i<MAX_id; i++) /* deallocate the array */
+    {
+        free(GeneralMAt[i]);
+    }
+    free(GeneralMAt);
+
+    free (distance);/* deallocate the array */
+    return tempDistance;
 }
 
 

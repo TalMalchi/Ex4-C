@@ -20,9 +20,11 @@ int main() {
         //build_graph_cmd(head);
         if (action == 'A') {//worke good
             deleteGraph_cmd(&head);//done.after debugging
+            // free(head);
             head = NULL;
             build_graph_cmd(&head);//done.after debugging
-         }
+
+        }
         else if (action == 'B') { //done.after debugging
             add_new_node(&head);
         }
@@ -54,9 +56,14 @@ int main() {
 
         else {
             deleteGraph_cmd(&head);//done.after debugging
+            free(head);
+            head = NULL;
             return 0;
         }
     }
+    deleteGraph_cmd(&head);//done.after debugging
+    //free(head);
+    head = NULL;
 }
 
 //}
