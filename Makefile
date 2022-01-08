@@ -24,3 +24,4 @@ graph.o: graph.c graph.h
 
  clean:
 	rm -f graph *.o
+	//
