@@ -4,70 +4,59 @@
 //#include <math.h>
 #define INFINITY 999999
 int node_numbers;
-int MAX_id=-1;
+int MAX_id = -1;
 
 //with using :
 //https://www.log2base2.com/data-structures/linked-list/inserting-a-node-at-the-end-of-a-linked-list.html
 
-void insertNewNode(node **head, int id) {
-    //void insertNewNode (pnode **head,int id) {
-
-    if (*head == NULL) { //if head is NULL, it is an empty list
+void insertNewNode(node **head, int id)
+{
+    if (*head == NULL)//if head is NULL, it is an empty list
+    {                                                                     
         struct GRAPH_NODE_ *newNode = malloc(sizeof(struct GRAPH_NODE_)); //create a new node
-        //printf("inserting node_id_num=%d\n",id);
-        //struct NODE *newNode; //create a new node
         newNode->node_num = id;
         newNode->next = NULL;
         newNode->edges = NULL;
 
         *head = newNode;
-
-    } else //else, find the last node and add the newNode
+    }
+    else //else, find the last node and add the newNode
     {
         struct GRAPH_NODE_ *lastNode = *head;
-        while (lastNode->next != NULL && lastNode->node_num !=id) //until last node's next address will be NULL.(check if the node already exist in the list)
+        while (lastNode->next != NULL && lastNode->node_num != id) //until last node's next address will be NULL.(check if the node already exist in the list)
         {
             lastNode = lastNode->next; //precede the node to be the next node
         }
 
-        if (lastNode->node_num !=id)//if we exit from the while because (lastNode->node_num==id) we will not add the new node, if it do not exist ,than :
+        if (lastNode->node_num != id) //if we exit from the while because (lastNode->node_num==id) we will not add the new node, if it do not exist ,than :
         {
             struct GRAPH_NODE_ *newNode = malloc(sizeof(struct GRAPH_NODE_)); //create a new node
-            //printf("inserting node_id_num=%d\n",id);
-            //struct NODE *newNode; //create a new node
             newNode->node_num = id;
             newNode->next = NULL;
             newNode->edges = NULL;
-            lastNode->next = newNode;  //we will add the newNode at the end of the linked list
+            lastNode->next = newNode; //we will add the newNode at the end of the linked list
         }
-        //else{
-        //    free(newNode);
-        //    newNode=NULL;
-        //}
-
     }
-    if(MAX_id<id+1)
+    if (MAX_id < id + 1)
     {
-        MAX_id=id+1;
+        MAX_id = id + 1;
     }
-
 }
 
-
-void insertNewEdge(node **Nhead,int Nsrc, int weight, int dest) {
+void insertNewEdge(node **Nhead, int Nsrc, int weight, int dest)
+{
     struct edge_ *newEdge = malloc(sizeof(struct edge_)); //create a new node
-    //pnode src_node= getNode(*head, src);
-    //src_node->edge->
     newEdge->weight = weight;
     pnode src_node = getNode(Nhead, Nsrc);
     pnode dest_node = getNode(Nhead, dest);
     newEdge->endpoint = dest_node;
     newEdge->next = NULL;
-    if (src_node->edges == NULL) { //if head is NULL, it is an empty list
+    if (src_node->edges == NULL)
+    { //if head is NULL, it is an empty list
         src_node->edges = newEdge;
+    }
+    else //else, find the last node and add the newNode
 
-    } else //else, find the last node and add the newNode
-    
     {
         struct edge_ *lastEdge = src_node->edges;
         while (lastEdge->next != NULL) //we will moove over all edges in node,last Edges's next address will be NULL.
@@ -75,233 +64,195 @@ void insertNewEdge(node **Nhead,int Nsrc, int weight, int dest) {
             lastEdge = lastEdge->next; //precede the Edge to be the next Edge
         }
 
-        lastEdge->next = newEdge;  //add the newEdge at the end of the linked list
-
+        lastEdge->next = newEdge; //add the newEdge at the end of the linked list
     }
 }
 
-pnode getNode(node **head, int id) { // retrun a NODE
+pnode getNode(node **head, int id)
+{ // retrun a NODE
     pnode p = *head;
-    while (p!= NULL) {
-        if (p->node_num == id) { //search for the node with the given id
+    while (p != NULL)
+    {
+        if (p->node_num == id)
+        { //search for the node with the given id
             return p;
-        } else {
+        }
+        else
+        {
             p = p->next;
         }
     }
-    return NULL;//if node is not exist
+    return NULL; //if node is not exist
 }
 
-
-void build_graph_cmd(pnode *head) {
-    //deleteGraph_cmd(head);
-    int id_node_src=0;
-    int node_dest=0;
-    int weight=0;
-    int counter=0;
-    char n='a';
+void build_graph_cmd(pnode *head)
+{
+    int id_node_src = 0;
+    int node_dest = 0;
+    int weight = 0;
+    int counter = 0;
+    char n = 'a';
     scanf(" %d", &node_numbers); //scan node numbers
-    while (counter < node_numbers) {
+    while (counter < node_numbers)
+    {
         scanf(" %c", &n); //scan char 'n'
         counter++;
-        scanf(" %d", &id_node_src);//get first node
+        scanf(" %d", &id_node_src); //get first node
         insertNewNode(head, id_node_src);
 
-        while (scanf(" %d", &node_dest)) { //start to moove over all dest weight dest weight etc. until we get more 'n'
+        while (scanf(" %d", &node_dest))
+        { //start to moove over all dest weight dest weight etc. until we get more 'n'
             insertNewNode(head, node_dest);
             scanf(" %d", &weight);
-            insertNewEdge(head,id_node_src, weight, node_dest);
+            insertNewEdge(head, id_node_src, weight, node_dest);
         }
-
     }
 }
 
 //function delete edges go out from node
-void deleteEdges_FromNode(node **head, int id)///////////////////////////////problem in while!!!
+void deleteEdges_FromNode(node **head, int id)
 {
-//    node *curr_node= getNode(*head, id);
-    node *curr_node= getNode(head, id);
+    node *curr_node = getNode(head, id);
 
-    if(curr_node->edges== NULL)//if there are no edges in this node
+    if (curr_node->edges == NULL) //if there are no edges in this node
     {
         return;
     }
-
-//    struct edge *temp = NULL;//temp is used to freeing the memory
-    edge *temp;//temp is used to freeing the memory
-    while (curr_node->edges!=NULL)//moove over all edges
-//    while (curr_node->edges!=NULL)//moove over all edges
+    edge *temp; //temp is used to freeing the memory
+    while (curr_node->edges != NULL) //moove over all edges
+                                     //    while (curr_node->edges!=NULL)//moove over all edges
     {
         temp = curr_node->edges;
-//        curr_node->edges->next = curr_node->edges->next->next;//edge will be disconnected from the linked list.
-        curr_node->edges = curr_node->edges->next;//edge will be disconnected from the linked list.
+        curr_node->edges = curr_node->edges->next; //edge will be disconnected from the linked list.
 
-        free(temp);//free memory
+        free(temp); //free memory
     }
-    //just for debugging
-//    if (curr_node->edges== NULL)
-//    {
-//        printf("delete succeed");
-//    }
-
 }
 
-
-//void deleteGraph_cmd(pnode *head) {
-//    if (*head == NULL) {
-//        return;
-//    }
-//    pnode temp = *head; //init temp node to the head
-//    edge *edge_temp;
-//    while (temp) { // go all over the nodes
-//        node *curr_node = temp; //init curr node
-//        edge_temp = temp->edges; // init temp_edge to point the edges of
-//        while (edge_temp) { //go all over the edges in the node
-//            edge *curr_edge = edge_temp;
-//            edge_temp = edge_temp->next; //
-
-
 //function delete node (ONLY the node!!)
-void deleteNode(node **head, int key) {
-//    struct node *temp = NULL;//temp is used to freeing the memory
-    node *temp = NULL;//temp is used to freeing the memory
+void deleteNode(node **head, int key)
+{
+    node *temp = NULL; //temp is used to freeing the memory
 
     //key found on the head node.
     //move to head node to the next and free the head.
-    if ((*head)->node_num == key) {
-        temp = *head;    //backup to free the memory
+    if ((*head)->node_num == key)
+    {
+        temp = *head; //backup to free the memory
         *head = (*head)->next;
         free(temp);
-    } else { //if head is not == key
+    }
+    else
+    { //if head is not == key
         struct GRAPH_NODE_ *current = *head;
-        while (current->next != NULL) {//we will moove over all nodes
-            if (current->next->node_num == key) {//if yes, we need to delete the current->next node
+        while (current->next != NULL)
+        { //we will moove over all nodes
+            if (current->next->node_num == key)
+            { //if yes, we need to delete the current->next node
                 temp = current->next;
                 //node will be disconnected from the linked list.
                 current->next = current->next->next;
-                free(temp);//free memory
+                free(temp); //free memory
                 break;
             }
-            else { //Otherwise, move the current node and proceed
+            else
+            { //Otherwise, move the current node and proceed
                 current = current->next;
             }
         }
     }
 }
 
-void deleteGraph_cmd(pnode *head) {
-    MAX_id=-1;
-    if (*head == NULL) {
+void deleteGraph_cmd(pnode *head)
+{
+    MAX_id = -1;
+    if (*head == NULL)
+    {
         return;
     }
     pnode temp = *head; //init temp node to the head
     edge *edge_temp;
-    while (temp!=NULL) { // go all over the nodes
-        node *curr_node = temp; //init curr node
+    while (temp != NULL)
+    {                            // go all over the nodes
+        node *curr_node = temp;  //init curr node
         edge_temp = temp->edges; // init temp_edge to point the edges of
-        while (edge_temp!=NULL) { //go all over the edges in the node
+        while (edge_temp != NULL)
+        { //go all over the edges in the node
             edge *curr_edge = edge_temp;
             edge_temp = edge_temp->next; // increase the edge by 1
             free(curr_edge);
         }
         temp = temp->next;
         free(curr_node);
-        //deleteNode(head,)
     }
-    // if(temp==NULL){printf("temp is null\n");}
-    // if(head==NULL){printf("head is null\n");}
-    //free(head);
-
 }
 
 //D function - delete node and it is out & in edges
-void Delete_node(pnode *head) {
+void Delete_node(pnode *head)
+{
     int id;
-    scanf(" %d", &id);//id of the new node
+    scanf(" %d", &id); //id of the new node
     deleteEdges_TONode(head, id);
-//    if (getNode(head, id) == 0) { //check if the node exist in the graph. if it do not exist
-//        insertNewNode(*head, id);//we will insert this node
-//    } else { // if the node in the graph, delete it is edges
 
-    deleteEdges_FromNode(head, id);//delete all edges go out from this node
+    deleteEdges_FromNode(head, id); //delete all edges go out from this node
 
-    //}
+    
     //function delete node (ONLY the node!!)
     deleteNode(head, id);
-
-    //now we will moove over all nodes and their edges , and check if the  this node is dest node
-    /* pnode temp = *head; //define temp node to the head
-     edge *edge_temp;
-     while (temp!=NULL) // moove all over the nodes
-     {
-         edge_temp = temp->edges; // init temp_edge to point the edges of
-         while (edge_temp!=NULL) { //noove over all edges in node
-             {
-                 if(edge_temp->endpoint->node_num ==id)//if this is the dest node, we will remove this edge
-                 {
-                     free(edge_temp);
-                     printf("node deleted");
-                 }
-             }
-         }
-
-     }*/
 }
 
 //function delete edges go out from node
-void deleteEdges_TONode(node **head, int id)///////////////////////////////problem in while!!!
+void deleteEdges_TONode(node **head, int id)
 {
-    struct GRAPH_NODE_ *tempNode = *head;//define head of the list as a temp node
+    struct GRAPH_NODE_ *tempNode = *head; //define head of the list as a temp node
     struct edge_ *tempEdge;
     while (tempNode != NULL) //moving all over nodes in graph
     {
 
-        if (tempNode->edges!=NULL && tempNode->edges->endpoint->node_num == id) {
+        if (tempNode->edges != NULL && tempNode->edges->endpoint->node_num == id)
+        {
 
-            tempEdge = tempNode->edges;    //backup to free the memory
+            tempEdge = tempNode->edges; //backup to free the memory
             tempNode->edges = tempNode->edges->next;
             free(tempEdge);
-        } else if(tempNode->edges!= NULL){
-            struct edge_ *currEdge = tempNode->edges;//define head of the list as a temp edge
+        }
+        else if (tempNode->edges != NULL)
+        {
+            struct edge_ *currEdge = tempNode->edges; //define head of the list as a temp edge
 
-            while (currEdge->next != NULL)//moving all over edge in one node
+            while (currEdge->next != NULL) //moving all over edge in one node
             {
 
-                if (currEdge->next->endpoint->node_num == id)//if this is the dest node, we will remove this edge
+                if (currEdge->next->endpoint->node_num == id) //if this is the dest node, we will remove this edge
                 {
 
                     tempEdge = currEdge->next;
                     //node will be disconnected from the linked list.
                     currEdge->next = currEdge->next->next;
                     free(tempEdge);
-                }else {
+                }
+                else
+                {
                     currEdge = currEdge->next;
                 }
             }
         }
         tempNode = tempNode->next;
     }
-
 }
 
 //B function
-void add_new_node(pnode *head){
+void add_new_node(pnode *head)
+{
     int id;
-    scanf(" %d", &id);//id of the new node
-    if(getNode(head, id)==0){ //check if the node exist in the graph. if it do not exist
-        //insertNewNode(*head, id);//we will insert this node
-//        insertNewNode(&head, id);
+    scanf(" %d", &id); //id of the new node
+    if (getNode(head, id) == 0)
+    {
         insertNewNode(head, id);
     }
-    else { // if the node in the graph, delete it is edges
-        deleteEdges_FromNode(head, id);//delete all edges go out from this node
-//        edge *edgeTemp;
-//        node *curr_node= getNode(*head, id);
-//        edgeTemp = curr_node->edges ; // init temp_edge to point the edges of
-//        while (edgeTemp != NULL) { //go all over the edges in the node
-//            edge *curr_edge= edgeTemp;
-//            edgeTemp= edgeTemp->next; // increase the edge by 1
-//            free(curr_edge);
+    else  // if the node in the graph, delete it is edges
+    { 
+        deleteEdges_FromNode(head, id); //delete all edges go out from this node
     }
     int weight;
     int dest;
@@ -313,218 +264,155 @@ void add_new_node(pnode *head){
     }
 }
 
-
-
-//function to decleare a memory to matrix, by using :https://easysavecode.com/8DQJlYam
-//int **allocate_board(int Rows, int Cols)
-//{
-//    // allocate Rows rows, each row is a pointer to int
-//    int **board = (int **)malloc(Rows * sizeof(int *));
-//    int row;
-//
-//    // for each row allocate Cols ints
-//    for (row = 0; row < Rows; row++) {
-//        board[row] = (int *)calloc(Cols , sizeof(int));
-//    }
-//
-//    return board;
-//}
-
-int ** allocfunc( int rows, int cols){
+int **allocfunc(int rows, int cols)
+{
     int i;
-    int ** array;
+    int **array;
     /* allocate the array */
     array = malloc(rows * sizeof *array);
-    for (i=0; i<rows; i++)
+    for (i = 0; i < rows; i++)
     {
         array[i] = malloc(cols * sizeof *array[i]);
     }
-    for (i=0; i<rows; i++)
+    for (i = 0; i < rows; i++)
     {
-        for (int j=0; j<cols; j++)
+        for (int j = 0; j < cols; j++)
         {
-            //printf("i=%d j=%d " ,i,j);
+
             array[i][j] = 0;
         }
     }
-    //printf("\narr=%d\n", array);
     return array;
 }
 
-//function put all weights in matrix num_of_nodes*num_of_nodes by src and node
-//int **initMAT(pnode *headNode)
-void initMAT(node **headNode,int **matOfEdgesAndNodes)
-{//define mat numOfNodes*numOfNodes and the weight of every edge is written in it cell
-//int matOfEdgesAndNodes[node_numbers][node_numbers];=allocate_board(node_numbers, node_numbers);//decleare a memory to matrix
-    //int **matOfEdgesAndNodes = allocate_board(node_numbers,node_numbers);//decleare a memory to matrix
-    struct GRAPH_NODE_ *tempNode = *headNode;//define head of the list as a temp node
-    while (tempNode != NULL) //moving all over nodes in graph
+void initMAT(node **headNode, int **matOfEdgesAndNodes)
+{
+
+    struct GRAPH_NODE_ *tempNode = *headNode; //define head of the list as a temp node
+    while (tempNode != NULL)                  //moving all over nodes in graph
     {
-        struct edge_ *tempEdge = tempNode->edges;//define head of the list as a temp edge
+        struct edge_ *tempEdge = tempNode->edges; //define head of the list as a temp edge
 
-        while(tempEdge != NULL)//moving all over edge in one node
+        while (tempEdge != NULL) //moving all over edge in one node
         {
-//            printf("tempNode->node_num: %ld ",tempNode->node_num);
-//            printf("tempEdge->endpoint->node_num: %ld ",tempEdge->endpoint->node_num);
-//            printf("tempEdge->weight: %ld\n",tempEdge->weight);
-
-            matOfEdgesAndNodes[tempNode->node_num][tempEdge->endpoint->node_num]=tempEdge->weight;//define every cell as [edge src][edge dest]
+            matOfEdgesAndNodes[tempNode->node_num][tempEdge->endpoint->node_num] = tempEdge->weight; //define every cell as [edge src][edge dest]
             tempEdge = tempEdge->next;
         }
         tempNode = tempNode->next;
     }
-//    return matOfEdgesAndNodes;
 }
-int *Dijkstra(pnode *head,int **Graph, int num_of_nodes_in_g, int start) {//by using : https://www.programiz.com/dsa/dijkstra-algorithm
+int *Dijkstra(pnode *head, int **Graph, int num_of_nodes_in_g, int start)
+{ //by using : https://www.programiz.com/dsa/dijkstra-algorithm
 
-    int cost[num_of_nodes_in_g][num_of_nodes_in_g];/* 2D array declaration*/
-    int *distance=(int*)malloc(num_of_nodes_in_g * sizeof(int));
-    //int pred[num_of_nodes_in_g];
+    int cost[num_of_nodes_in_g][num_of_nodes_in_g]; /* 2D array declaration*/
+    int *distance = (int *)malloc(num_of_nodes_in_g * sizeof(int));
     int visited[num_of_nodes_in_g];
-    int count=0;
-    int mindistance=0;
-    int nextnode=0, i=0, j=0;
-    //printf("nextnode=%d\n",nextnode);
+    int count = 0;
+    int mindistance = 0;
+    int nextnode = 0, i = 0, j = 0;
     // Creating cost matrix
     for (i = 0; i < num_of_nodes_in_g; i++)
-        for (j = 0; j < num_of_nodes_in_g; j++) {
-            //printf("Graph[i][j]:%d i=%d j=%d\n", Graph[i][j], i, j);
-            //printf("INFINITY = %d\n", INFINITY);
-            if (Graph[i][j] == 0) { //init all values as infinity
+        for (j = 0; j < num_of_nodes_in_g; j++)
+        {
+            if (Graph[i][j] == 0)
+            { //init all values as infinity
                 cost[i][j] = INFINITY;
-                //printf("cost inf=%d\n", cost[i][j]);
             }
             else
                 cost[i][j] = Graph[i][j];
         }
-    //printf("stam1 start=%d\n",start);
-    for (i = 0; i < num_of_nodes_in_g; i++) {
-        //printf("stam3 i=%d start=%d\n",i,start);
+    for (i = 0; i < num_of_nodes_in_g; i++)
+    {
         distance[i] = cost[start][i];
-        //pred[i] = start;
         visited[i] = 0;
     }
-//    for (i = 0; i < num_of_nodes_in_g; i++){
-//        for (j = 0; j < num_of_nodes_in_g; j++){
-//            printf("%d ",cost[i][j],i,j);
-//        }
-//        printf("\n");
-//    }
-//    for (j = 0; j < num_of_nodes_in_g; j++){
-//            printf("%d ",distance[j],j);
-//        }
-    //for (j = 0; j < num_of_nodes_in_g; j++){
-    //   printf("%d ",pred[j],j);
-    //}
-    //printf("start=%d\n",start);
+
     distance[start] = 0;
     visited[start] = 1;
     count = 1;
-    //printf("\n distance1 = ");
-//    for (j = 0; j < num_of_nodes_in_g; j++){
-//        printf("d=%d j=%d ",distance[j],j);
-//    }
-    while (count < num_of_nodes_in_g - 1) {
+
+    while (count < num_of_nodes_in_g - 1)
+    {
         mindistance = INFINITY;
-        //printf("Yuval1 nextnode=%d\n",nextnode);
         for (i = 0; i < num_of_nodes_in_g; i++)
-            if (distance[i] < mindistance && !visited[i]) {
+            if (distance[i] < mindistance && !visited[i])
+            {
                 mindistance = distance[i];
                 nextnode = i;
-                //printf("Yuval3 nextnode=%d\n",nextnode);
             }
-        //printf("Yuval2 nextnode=%d mindistance=%d\n",nextnode,mindistance);
-        if(mindistance!=INFINITY) {
+
+        if (mindistance != INFINITY)
+        {
             visited[nextnode] = 1;
         }
         for (i = 0; i < num_of_nodes_in_g; i++)
-            if (!visited[i]) {
-                //printf("mindistance=%d mindistance + cost[nextnode][i]=%d\n",mindistance,mindistance + cost[nextnode][i]);
-                if (mindistance + cost[nextnode][i] < distance[i]) {
+            if (!visited[i])
+            {
+
+                if (mindistance + cost[nextnode][i] < distance[i])
+                {
                     distance[i] = mindistance + cost[nextnode][i];
-                    //pred[i] = nextnode;
                 }
             }
         count++;
     }
-    //this is distance array:
-    //index=dest:     0   1   2   ... n
-    //weight:         x   y   z   ... f
-//    printf("\n distance = ");
-//    for (j = 0; j < num_of_nodes_in_g; j++){
-//        printf("d=%d j=%d ",distance[j],j);
-//    }
-    return distance;//distance is array that the Distance from source to i is distance[i]
+    return distance; //distance is array that the Distance from source to i is distance[i]
 }
-void printfunc(int** array, int rows, int cols)
+void printfunc(int **array, int rows, int cols)
 {
     int i, j;
-    printf("r=%d, c=%d\n",rows,cols);
-    for (i=0; i<rows; i++)
+    printf("r=%d, c=%d\n", rows, cols);
+    for (i = 0; i < rows; i++)
     {
-        for (j=0; j<cols; j++)
+        for (j = 0; j < cols; j++)
         {
-            printf("%d ",array[i][j]);
+            printf("%d ", array[i][j]);
         }
         printf("\n");
     }
 }
-int shortsPath_cmd(pnode *head,int src,int dest) {
+int shortsPath_cmd(pnode *head, int src, int dest)
+{
     int **GeneralMAt;
-    //("in shortest path src=%d dest=%d MAX_id=%d\n",src,dest,MAX_id);
-    GeneralMAt=allocfunc(MAX_id,MAX_id);//decleare a matrix
-    //printfunc(GeneralMAt, MAX_id,MAX_id);
-    initMAT(head,GeneralMAt);//put inside values od weight
-    //printfunc(GeneralMAt, MAX_id,MAX_id);
-    //int check = 0;
-    // node *tempNodeP = *head;
-//    if (tempNodeP == NULL)//if the graph empty
-//    {
-//        printf("Dijsktra shortest path:%ld",-1) ;
-//    }
-//    if (src == dest) //if source is equal to dest
-//    {
-//        printf("Dijsktra shortest path:%ld",0) ;
-//    }
+    GeneralMAt = allocfunc(MAX_id, MAX_id); //decleare a matrix
+    initMAT(head, GeneralMAt);              //put inside values od weight
     int *distance;
-    //Dijkstra(pnode *head,int **Graph, int num_of_nodes_in_g, int start)
-    distance = Dijkstra(head,GeneralMAt, MAX_id, src);
-//    printf("Dijsktra shortest path:%ld\n",distance[dest]) ;
-    int tempDistance=distance[dest];
-    for (int i=0; i<MAX_id; i++) /* deallocate the array */
+    distance = Dijkstra(head, GeneralMAt, MAX_id, src);
+    int tempDistance = distance[dest];
+    for (int i = 0; i < MAX_id; i++) /* deallocate the array */
     {
         free(GeneralMAt[i]);
     }
     free(GeneralMAt);
 
-    free (distance);/* deallocate the array */
+    free(distance); /* deallocate the array */
     return tempDistance;
 }
 
-
-void TSP(pnode *head) {
+void TSP(pnode *head)
+{
     int cities, temp; //total number of the cities
     int min_dis = INFINITY;
     int temp_dis = 0;
     scanf(" %d", &cities);
 
-///////////check if malloc isnt null///////
-    int *arr = (int *) malloc(cities * sizeof(int)); //init array of the cities
-    for (int i = 0; i < cities; ++i) {
+    ///////////check if malloc isnt null///////
+    int *arr = (int *)malloc(cities * sizeof(int)); //init array of the cities
+    for (int i = 0; i < cities; ++i)
+    {
         scanf(" %d", &arr[i]);
-        //printf("in TSP check city %d ",arr[i]);
     }
-//    printf("\n");
-    //int *arr_copy = (int *) malloc(cities * sizeof(int)); //create copy array
-    //memcpy(arr_copy, arr, cities);
-    for (int j = 1; j <= cities; j++) {
+    for (int j = 1; j <= cities; j++)
+    {
         temp_dis = 0;
-        for (int i = 0; i < cities - 1; i++) {
+        for (int i = 0; i < cities - 1; i++)
+        {
             temp = arr[i];
             arr[i] = arr[i + 1];
             arr[i + 1] = temp;
         }
-        for (int k = 0; k < cities - 1 && temp_dis != INFINITY; k++) {
+        for (int k = 0; k < cities - 1 && temp_dis != INFINITY; k++)
+        {
 
             int curr_dis = shortsPath_cmd(head, arr[k], arr[k + 1]);
             if (curr_dis == INFINITY)
@@ -532,7 +420,6 @@ void TSP(pnode *head) {
             else
                 temp_dis += curr_dis;
         }
-        //printf("temp_dis=%d min_dis=%d\n",temp_dis,min_dis);
         if (temp_dis < min_dis)
             min_dis = temp_dis;
     }
