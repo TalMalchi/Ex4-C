@@ -54,7 +54,7 @@ void insertNewEdge(node **Nhead,int Nsrc, int weight, int dest) {
         src_node->edges = newEdge;
 
     } else //else, find the last node and add the newNode
-
+    
     {
         struct edge_ *lastEdge = src_node->edges;
         while (lastEdge->next != NULL) //we will moove over all edges in node,last Edges's next address will be NULL.

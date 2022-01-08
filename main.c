@@ -22,7 +22,8 @@ int main() {
             deleteGraph_cmd(&head);//done.after debugging
             head = NULL;
             build_graph_cmd(&head);//done.after debugging
-        } else if (action == 'B') { //done.after debugging
+         }
+        else if (action == 'B') { //done.after debugging
             add_new_node(&head);
         }
         else if (action == 'D'){ //remove node ,need to check
@@ -52,6 +53,7 @@ int main() {
         }
 
         else {
+            deleteGraph_cmd(&head);//done.after debugging
             return 0;
         }
     }
