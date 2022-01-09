@@ -37,18 +37,18 @@ int main() {
             scanf(" %d", &dest);
             if (head == NULL)//if the graph empty
             {
-                printf("Dijsktra shortest path:%d\n",-1);
+                printf("Dijsktra shortest path: %d\n",-1);
             }
             if (src == dest) //if source is equal to dest
             {
-                printf("Dijsktra shortest path:%d\n",0) ;
+                printf("Dijsktra shortest path: %d\n",0) ;
             }
             ans= shortsPath_cmd(&head, src, dest);
             if(ans==999999)
             {
-                printf("Dijsktra shortest path:%d\n",-1);
+                printf("Dijsktra shortest path: %d\n",-1);
             }
-            printf("Dijsktra shortest path:%d\n", ans);
+            printf("Dijsktra shortest path: %d\n", ans);
         }
         else if (action == 'T') { //TSP
             TSP(&head);
